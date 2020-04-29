@@ -23,6 +23,7 @@ class AppletList extends Component {
   handlePressApplet = (applet) => {
     const { setCurrentApplet } = this.props;
     setCurrentApplet(applet.id);
+    console.log('current applet id', applet.id);
     Actions.push('applet_details');
   }
 

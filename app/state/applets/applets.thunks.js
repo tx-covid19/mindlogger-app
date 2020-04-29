@@ -25,6 +25,7 @@ import {
 } from './applets.actions';
 import { sync } from '../app/app.thunks';
 import { transformApplet } from '../../models/json-ld';
+import demoApplet from '../../applets/demoApplet.json';
 
 export const scheduleAndSetNotifications = () => (dispatch, getState) => {
   const state = getState();
@@ -52,6 +53,7 @@ export const downloadApplets = () => (dispatch, getState) => {
   const userInfo = userInfoSelector(state);
   dispatch(setDownloadingApplets(true));
   getApplets(auth.token, userInfo._id).then((applets) => {
+    applets.push(demoApplet);
     if (loggedInSelector(getState())) { // Check that we are still logged in when fetch finishes
       const transformedApplets = applets
         .filter(applet => !R.isEmpty(applet.items))
