@@ -529,7 +529,7 @@
     },
     "applet": {
         "@id": "reprolib:protocols/mindlogger-demo/mindlogger-demo_schema",
-        "_id": "applet/5ea824a386d25a5dbb14ea82",
+        "_id": "applet/1",
         "http://schema.org/about": [
             {
                 "@language": "en",
