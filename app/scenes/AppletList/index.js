@@ -23,6 +23,7 @@ class AppletList extends Component {
   handlePressApplet = (applet) => {
     const { setCurrentApplet } = this.props;
     setCurrentApplet(applet.id);
+    console.log('current applet id', applet.id);
     Actions.push('applet_details');
   }
 
@@ -46,6 +47,7 @@ class AppletList extends Component {
         primaryColor={skin.colors.primary}
         onPressDrawer={() => Actions.push('settings')}
         onPressRefresh={this.refresh}
+        onPressGps={() => { Actions.push('gps'); }}
         onPressAbout={() => { Actions.push('about_app'); }}
         onPressApplet={this.handlePressApplet}
         mobileDataAllowed={mobileDataAllowed}

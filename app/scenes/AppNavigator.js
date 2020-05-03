@@ -6,6 +6,7 @@ import getTheme from '../../native-base-theme/components';
 import platform from '../../native-base-theme/variables/platform';
 // Scenes
 import AboutApp from './AboutApp';
+import Gps from './Gps';
 import Activity from './Activity';
 import ActivityDetails from './ActivityDetails';
 import ActivityThanks from './ActivityThanks';
@@ -37,6 +38,7 @@ const Navigator = Actions.create(
           <Scene key="splash" component={Splash} hideNavBar initial />
           <Scene key="about_act" component={InfoAct} />
           <Scene key="about_app" component={AboutApp} />
+          <Scene key="gps" component={Gps} />
           <Scene key="about_volume" component={VolumeInfo} />
           <Scene key="activity_details" component={ActivityDetails} />
           <Scene key="applet_details" component={AppletDetails} />
