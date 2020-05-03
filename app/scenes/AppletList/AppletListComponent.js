@@ -48,6 +48,7 @@ const AppletListComponent = ({
   onPressDrawer,
   onPressRefresh,
   onPressAbout,
+  onPressGps,
   onPressApplet,
   mobileDataAllowed,
   toggleMobileDataAllowed,
@@ -118,6 +119,17 @@ const AppletListComponent = ({
               textAlign: 'center',
             }}
           >
+            <TouchableOpacity onPress={onPressGps}>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                }}
+              >
+                View GPS Data
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={onPressAbout}>
               <Text
                 style={{
@@ -144,6 +156,7 @@ AppletListComponent.propTypes = {
   isDownloadingApplets: PropTypes.bool.isRequired,
   onPressDrawer: PropTypes.func.isRequired,
   onPressAbout: PropTypes.func.isRequired,
+  onPressGps: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,

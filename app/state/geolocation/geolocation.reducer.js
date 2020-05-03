@@ -1,7 +1,7 @@
 import GEOLOCATION_CONSTANTS from './geolocation.constants';
 
 export const initialState = {
-  data: null,
+  data: [],
 };
 
 export default (state = initialState, action = {}) => {

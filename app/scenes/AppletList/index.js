@@ -47,6 +47,7 @@ class AppletList extends Component {
         primaryColor={skin.colors.primary}
         onPressDrawer={() => Actions.push('settings')}
         onPressRefresh={this.refresh}
+        onPressGps={() => { Actions.push('gps'); }}
         onPressAbout={() => { Actions.push('about_app'); }}
         onPressApplet={this.handlePressApplet}
         mobileDataAllowed={mobileDataAllowed}
