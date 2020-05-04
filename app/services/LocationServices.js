@@ -2,6 +2,7 @@ import BackgroundGeolocation from '@mauron85/react-native-background-geolocation
 
 import { setGeolocationData } from '../state/geolocation/geolocation.actions';
 import { dataSelector } from '../state/geolocation/geolocation.selectors';
+import { areLocationsNearby } from '../helpers/Intersect';
 import { getStore } from '../store';
 
 let isBackgroundGeolocationConfigured = false;
@@ -68,6 +69,46 @@ export class LocationData {
     for (let i = 0; i < locationArray.length; i++) {
       if (locationArray[i]['time'] > unixtimeUTC_28daysAgo) {
         curated.push(locationArray[i]);
+      }
+    }
+
+    // Backfill the stationary points, if available
+    // The assumption is that if we see a gap in the data, and the
+    // device hasn't moved significantly, then we can fill in the missing data
+    // with the current location.  This makes it easier for a health authority
+    // person to have a set of locations over time, and they can manually
+    // redact the time frames that aren't correct.
+    if (curated.length >= 1) {
+      const lastLocationArray = curated[curated.length - 1];
+
+      const areCurrentPreviousNearby = areLocationsNearby(
+        lastLocationArray['latitude'],
+        lastLocationArray['longitude'],
+        location['latitude'],
+        location['longitude'],
+      );
+      console.log('[INFO] nearby:', nearby);
+
+      // Actually do the backfill if the current point is nearby the previous
+      // point and the time is within the maximum time to backfill.
+      const lastRecordedTime = lastLocationArray['time'];
+      if (
+        areCurrentPreviousNearby &&
+        unixtimeUTC - lastRecordedTime < this.maxBackfillTime
+      ) {
+        for (
+          let newTS = lastRecordedTime + this.locationInterval;
+          newTS < unixtimeUTC - this.locationInterval;
+          newTS += this.locationInterval
+        ) {
+          let lat_lon_time = {
+            latitude: lastLocationArray['latitude'],
+            longitude: lastLocationArray['longitude'],
+            time: newTS,
+          };
+          console.log('[INFO] backfill location:', lat_lon_time);
+          curated.push(lat_lon_time);
+        }
       }
     }
 
