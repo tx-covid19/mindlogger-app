@@ -69,9 +69,9 @@ class GpsData extends Component {
   }
 
   render() {
-    const data = JSON.stringify(this.props.data);
+    const data = JSON.stringify(this.props.data, undefined, 4);
     return (
-      <Container style={styles.container}>
+      <Container>
         <StatusBar barStyle="light-content" />
         <Header hasSubtitle>
           <Left>
@@ -85,17 +85,27 @@ class GpsData extends Component {
           <Right />
         </Header>
         <Content>
-          <View style={styles.content}>
-            <TouchableOpacity
+          <View>
+            <Button
               onPress={() => this.onStart()}
+              style={styles.button}
             >
-              <Text>start</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              <Text
+                style={styles.buttonText}
+              >
+                Start
+              </Text>
+            </Button>
+            <Button
               onPress={() => this.onStop()}
+              style={styles.button}
             >
-              <Text>stop</Text>
-            </TouchableOpacity>
+              <Text
+                style={styles.buttonText}
+              >
+                Stop
+              </Text>
+            </Button>
 
             <Text>
               {data}

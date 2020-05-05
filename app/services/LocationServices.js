@@ -10,7 +10,7 @@ let isBackgroundGeolocationConfigured = false;
 export class LocationData {
   constructor() {
     // The desired location interval, and the minimum acceptable interval
-    this.locationInterval = 60000 * 0.1; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
+    this.locationInterval = 60000 * 5; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
 
     // minLocationSaveInterval should be shorter than the locationInterval (to avoid strange skips)
     // Minimum time between location information saves.  60000*4 = 4 minutes
@@ -53,6 +53,16 @@ export class LocationData {
     let unixtimeUTC = Math.floor(location['time']);
     let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
 
+    const date = new Date(unixtimeUTC);
+    // Hours part from the timestamp
+    const hours = date.getHours();
+    // Minutes part from the timestamp
+    const minutes = "0" + date.getMinutes();
+    // Seconds part from the timestamp
+    const seconds = "0" + date.getSeconds();
+    // Will display time in 10:30:23 format
+    const formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
     // Verify that at least the minimum amount of time between saves has passed
     // This ensures that no matter how fast GPS coords are delivered, saving
     // does not happen any faster than the minLocationSaveInterval
@@ -87,7 +97,6 @@ export class LocationData {
         location['latitude'],
         location['longitude'],
       );
-      console.log('[INFO] nearby:', nearby);
 
       // Actually do the backfill if the current point is nearby the previous
       // point and the time is within the maximum time to backfill.
@@ -117,7 +126,8 @@ export class LocationData {
     const lat_lon_time = {
       latitude: location['latitude'],
       longitude: location['longitude'],
-      time: unixtimeUTC,
+      unixTime: unixtimeUTC,
+      time: formattedTime,
     };
     curated.push(lat_lon_time);
     console.log('[INFO] saved location:', lat_lon_time);
