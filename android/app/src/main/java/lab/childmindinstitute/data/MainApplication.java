@@ -1,4 +1,4 @@
-package lab.childmindinstitute.data;
+package lab.covidut.data;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,6 +12,8 @@ import java.util.List;
 
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+
+import com.marianhello.bgloc.react.BackgroundGeolocationPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
              packages.add(new RNFirebaseNotificationsPackage());
             packages.add(new RNFirebaseMessagingPackage());
+            packages.add(new BackgroundGeolocationPackage());
           return packages;
         }
 
