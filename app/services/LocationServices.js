@@ -3,6 +3,7 @@ import BackgroundGeolocation from '@mauron85/react-native-background-geolocation
 import { setGeolocationData } from '../state/geolocation/geolocation.actions';
 import { dataSelector } from '../state/geolocation/geolocation.selectors';
 import { areLocationsNearby } from '../helpers/Intersect';
+import { distanceBetweenPoints } from '../helpers/LocationStatistics';
 import { getStore } from '../store';
 
 let isBackgroundGeolocationConfigured = false;
@@ -10,7 +11,7 @@ let isBackgroundGeolocationConfigured = false;
 export class LocationData {
   constructor() {
     // The desired location interval, and the minimum acceptable interval
-    this.locationInterval = 60000 * 5; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
+    this.locationInterval = 60000 * 3; // Time (in milliseconds) between location information polls.  E.g. 60000*5 = 5 minutes
 
     // minLocationSaveInterval should be shorter than the locationInterval (to avoid strange skips)
     // Minimum time between location information saves.  60000*4 = 4 minutes
@@ -46,13 +47,7 @@ export class LocationData {
     };
   }
 
-  saveLocation(location) {
-    // Persist this location data in our local storage of time/lat/lon values
-    const locationArray = this.getLocationData();
-    // Always work in UTC, not the local time in the locationData
-    let unixtimeUTC = Math.floor(location['time']);
-    let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
-
+  getFormattedTime(unixtimeUTC) {
     const date = new Date(unixtimeUTC);
     // Hours part from the timestamp
     const hours = date.getHours();
@@ -62,6 +57,19 @@ export class LocationData {
     const seconds = "0" + date.getSeconds();
     // Will display time in 10:30:23 format
     const formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+    return formattedTime;
+  }
+
+  saveLocation(location) {
+    // Persist this location data in our local storage of time/lat/lon values
+    const locationArray = this.getLocationData();
+    console.log('[INFO] Found stored location data', locationArray.length);
+    // Always work in UTC, not the local time in the locationData
+    let unixtimeUTC = Math.floor(location['time']);
+    let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
+
+    const formattedTime = this.getFormattedTime(unixtimeUTC);
 
     // Verify that at least the minimum amount of time between saves has passed
     // This ensures that no matter how fast GPS coords are delivered, saving
@@ -110,9 +118,11 @@ export class LocationData {
           newTS < unixtimeUTC - this.locationInterval;
           newTS += this.locationInterval
         ) {
+          const formattedBackfillTime = this.getFormattedTime(newTs);
           let lat_lon_time = {
             latitude: lastLocationArray['latitude'],
             longitude: lastLocationArray['longitude'],
+            formattedTime: formattedBackfillTime,
             time: newTS,
           };
           console.log('[INFO] backfill location:', lat_lon_time);
@@ -121,15 +131,29 @@ export class LocationData {
       }
     }
 
+    // Calculate distance between last point
+    let distanceTraveled = 0;
+    if (locationArray.length >= 1) {
+      const lastDataPoint = locationArray[locationArray.length - 1];
+      const lastLat = lastDataPoint.latitude;
+      const lastLong = lastDataPoint.longitude;
+      distanceTraveled = distanceBetweenPoints(
+        location.latitude, location.longitude, lastLat, lastLong,
+      );
+    }
+
     // Save the location using the current lat-lon and the
     // recorded GPS timestamp
+    console.log('curated before push', curated);
     const lat_lon_time = {
       latitude: location['latitude'],
       longitude: location['longitude'],
-      unixTime: unixtimeUTC,
-      time: formattedTime,
+      time: unixtimeUTC,
+      formattedTime: formattedTime,
+      distance: distanceTraveled,
     };
     curated.push(lat_lon_time);
+    console.log('curated after push', curated);
     console.log('[INFO] saved location:', lat_lon_time);
 
     // SetStoreData(LOCATION_DATA, curated);
@@ -306,8 +330,12 @@ export default class LocationServices {
       console.log('[INFO] stop');
     });
 
-    BackgroundGeolocation.on('stationary', () => {
+    BackgroundGeolocation.on('stationary', (location) => {
       console.log('[INFO] stationary');
+      BackgroundGeolocation.startTask((taskKey) => {
+        locationData.saveLocation(location);
+        BackgroundGeolocation.endTask(taskKey);
+      });
     });
 
     BackgroundGeolocation.checkStatus(status => {
