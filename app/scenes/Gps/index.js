@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, Text, Platform, TouchableOpacity } from 'react-native';
+import { StatusBar, Text, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, Icon, View, Header, Right, Body, Title, Left, Button } from 'native-base';
 import { Actions } from 'react-native-router-flux';
@@ -10,6 +10,7 @@ import {
   check,
 } from 'react-native-permissions';
 import styles from './styles';
+import { clearGeolocationData } from '../../state/geolocation/geolocation.actions';
 import { dataSelector } from '../../state/geolocation/geolocation.selectors';
 import LocationServices from '../../services/LocationServices';
 
@@ -36,6 +37,10 @@ class GpsData extends Component {
   onStop = () => {
     LocationServices.stop();
     console.log('stopping recording');
+  }
+
+  onClear = () => {
+    this.props.clearGeolocationData();
   }
 
   checkCurrentState() {
@@ -69,9 +74,9 @@ class GpsData extends Component {
   }
 
   render() {
-    const data = JSON.stringify(this.props.data);
+    const data = JSON.stringify(this.props.data, undefined, 4);
     return (
-      <Container style={styles.container}>
+      <Container>
         <StatusBar barStyle="light-content" />
         <Header hasSubtitle>
           <Left>
@@ -85,17 +90,38 @@ class GpsData extends Component {
           <Right />
         </Header>
         <Content>
-          <View style={styles.content}>
-            <TouchableOpacity
+          <View>
+            <Button
               onPress={() => this.onStart()}
+              style={styles.button}
             >
-              <Text>start</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+              <Text
+                style={styles.buttonText}
+              >
+                Start
+              </Text>
+            </Button>
+            <Button
               onPress={() => this.onStop()}
+              style={styles.button}
             >
-              <Text>stop</Text>
-            </TouchableOpacity>
+              <Text
+                style={styles.buttonText}
+              >
+                Stop
+              </Text>
+            </Button>
+
+            <Button
+              onPress={() => this.onClear()}
+              style={styles.button}
+            >
+              <Text
+                style={styles.buttonText}
+              >
+                Clear
+              </Text>
+            </Button>
 
             <Text>
               {data}
@@ -109,10 +135,15 @@ class GpsData extends Component {
 
 GpsData.propTypes = {
   data: PropTypes.array.isRequired,
+  clearGeolocationData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   data: dataSelector(state),
 });
 
-export default connect(mapStateToProps, null)(GpsData);
+const mapDispatchToProps = {
+  clearGeolocationData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GpsData);
