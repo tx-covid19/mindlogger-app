@@ -1,4 +1,4 @@
-package lab.childmindinstitute.data;
+package lab.covidut.data;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
