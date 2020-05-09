@@ -8,9 +8,6 @@ import { colors } from '../../theme';
 import ActivityList from '../../components/ActivityList';
 // import AppletSummary from '../../components/AppletSummary';
 import AppletCalendar from '../../components/AppletCalendar';
-import AppletFooter from './AppletFooter';
-import AppletAbout from '../../components/AppletAbout';
-import AppletData from '../../components/AppletData';
 import { getResponseInApplet } from '../../state/responses/responses.actions';
 
 
@@ -67,7 +64,6 @@ class AppletDetailsComponent extends React.Component {
 
   // eslint-disable-next-line
   renderActiveTab() {
-    const { selectedTab } = this.state;
     const {
       applet,
       onPressActivity,
@@ -77,31 +73,14 @@ class AppletDetailsComponent extends React.Component {
 
     const responseDates = this.getResponseDates() || [];
 
-    switch (selectedTab) {
-      case 'survey':
-        return (
-          <View style={{ flex: 1 }}>
-            <AppletCalendar responseDates={responseDates} />
-            <ActivityList
-              onPressActivity={onPressActivity}
-            />
-          </View>
-        );
-      case 'data':
-        return (
-          <View>
-            <AppletCalendar responseDates={responseDates} />
-            <AppletData
-              applet={applet}
-              appletData={appletData}
-            />
-          </View>
-        );
-      case 'about':
-        return (<AppletAbout about={applet.about ? applet.about.en : ''} />);
-      default:
-        break;
-    }
+    return (
+      <View style={{ flex: 1 }}>
+        <AppletCalendar responseDates={responseDates} />
+        <ActivityList
+          onPressActivity={onPressActivity}
+        />
+      </View>
+    );
   }
 
   handlePress() {
@@ -153,10 +132,6 @@ class AppletDetailsComponent extends React.Component {
             {this.renderActiveTab()}
           </Content>
         </ImageBackground>
-        <AppletFooter
-          active={selectedTab}
-          changeTab={tabName => this.setState({ selectedTab: tabName })}
-        />
       </Container>
     );
   }
