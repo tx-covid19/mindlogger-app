@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
   },
+  menu: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 const AppletListComponent = ({
@@ -48,6 +53,7 @@ const AppletListComponent = ({
   onPressDrawer,
   onPressRefresh,
   onPressAbout,
+  onPressCovid,
   onPressGps,
   onPressApplet,
   mobileDataAllowed,
@@ -121,22 +127,21 @@ const AppletListComponent = ({
           >
             <TouchableOpacity onPress={onPressGps}>
               <Text
-                style={{
-                  color: colors.primary,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}
+                style={styles.menu}
               >
                 View GPS Data
               </Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={onPressCovid}>
+              <Text
+                style={styles.menu}
+              >
+                View Covid Data
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={onPressAbout}>
               <Text
-                style={{
-                  color: colors.primary,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}
+                style={styles.menu}
               >
                 About MindLogger
               </Text>
@@ -156,6 +161,7 @@ AppletListComponent.propTypes = {
   isDownloadingApplets: PropTypes.bool.isRequired,
   onPressDrawer: PropTypes.func.isRequired,
   onPressAbout: PropTypes.func.isRequired,
+  onPressCovid: PropTypes.func.isRequired,
   onPressGps: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
