@@ -27,13 +27,6 @@ const styles = StyleSheet.create({
 // eslint-disable-next-line
 class AppletDetailsComponent extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      selectedTab: 'survey',
-    };
-  }
-
   getResponseDates() {
     // TODO: a quick hack to add a dot for today's date
     // if the user has responded today. This is instead of
@@ -63,13 +56,8 @@ class AppletDetailsComponent extends React.Component {
   }
 
   // eslint-disable-next-line
-  renderActiveTab() {
-    const {
-      applet,
-      onPressActivity,
-      inProgress,
-      appletData,
-    } = this.props;
+  renderProtocols() {
+    const { onPressActivity } = this.props;
 
     const responseDates = this.getResponseDates() || [];
 
@@ -96,9 +84,6 @@ class AppletDetailsComponent extends React.Component {
       hasInvites,
       primaryColor,
     } = this.props;
-
-    const { selectedTab } = this.state;
-
     return (
       <Container style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -129,7 +114,7 @@ class AppletDetailsComponent extends React.Component {
           }}
         >
           <Content>
-            {this.renderActiveTab()}
+            {this.renderProtocols()}
           </Content>
         </ImageBackground>
       </Container>
@@ -140,7 +125,6 @@ class AppletDetailsComponent extends React.Component {
 AppletDetailsComponent.propTypes = {
   applet: PropTypes.object.isRequired,
   appletData: PropTypes.object.isRequired,
-  inProgress: PropTypes.object.isRequired,
   onPressActivity: PropTypes.func.isRequired,
   onPressBack: PropTypes.func.isRequired,
   onPressSettings: PropTypes.func.isRequired,
