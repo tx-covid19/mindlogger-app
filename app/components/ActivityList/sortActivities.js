@@ -68,11 +68,10 @@ export default (activityList, inProgress, schedule) => {
   // const completed = getCompleted(notInProgress).reverse();
 
   return [
-    // ...addSectionHeader(addProp('status', 'pastdue', pastdue), 'Past Due'),
+    ...addSectionHeader(addProp('status', 'pastdue', pastdue), 'Past Due'),
     ...addSectionHeader(addProp('status', 'in-progress', inProgressActivities), 'In Progress'),
-    //...addSectionHeader(addProp('status', 'unscheduled', unscheduled), 'Unscheduled'),
+    ...addSectionHeader(addProp('status', 'unscheduled', unscheduled), 'Unscheduled'),
     // ...addSectionHeader(addProp('status', 'completed', completed), 'Completed'),
-    // ...addSectionHeader(addProp('status', 'scheduled', scheduled), 'Scheduled'),
-    ...addSectionHeader(addProp('status', 'ready', notInProgress), 'Ready'),
+    ...addSectionHeader(addProp('status', 'scheduled', scheduled), 'Scheduled'),
   ];
 };
