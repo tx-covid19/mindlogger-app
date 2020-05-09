@@ -17,6 +17,7 @@ import { colors } from '../../theme';
 import AppletListItem from '../../components/AppletListItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
+import config from '../../config';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,6 +40,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const backgroundImage = require('../../../img/skyline.jpg');
+
 const AppletListComponent = ({
   applets,
   invites,
@@ -59,9 +62,7 @@ const AppletListComponent = ({
       <StatusBar barStyle="light-content" />
       <ImageBackground
         style={{ width: '100%', height: '100%', flex: 1 }}
-        source={{
-          uri: 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-        }}
+        source={backgroundImage}
       >
         <SafeAreaView />
         <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }}>
@@ -120,7 +121,7 @@ const AppletListComponent = ({
             }}
           >
             <TouchableOpacity onPress={onPressGps}>
-              <Text
+            <Text
                 style={{
                   color: colors.primary,
                   fontSize: 16,
@@ -138,7 +139,7 @@ const AppletListComponent = ({
                   fontWeight: 'bold',
                 }}
               >
-                About MindLogger
+                About {config.defaultSkin.name}
               </Text>
             </TouchableOpacity>
           </View>

@@ -19,8 +19,9 @@ import styles from './styles';
 import { signInSuccessful } from '../../state/user/user.thunks';
 import { signIn } from '../../services/network';
 import LoginForm from './LoginForm';
-import { skinSelector, mobileDataAllowedSelector } from '../../state/app/app.selectors';
+import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import { toggleMobileDataAllowed } from '../../state/app/app.actions';
+import config from '../../config';
 
 const defaultLogo = require('../../../img/CMI_white_logo.png');
 
@@ -60,7 +61,8 @@ class Login extends Component {
   }
 
   render() {
-    const { skin, mobileDataAllowed, toggleMobileDataAllowed } = this.props;
+    const { mobileDataAllowed, toggleMobileDataAllowed } = this.props;
+    const skin = config.defaultSkin;
     const title = skin.name;
     const logo = (typeof skin.logo !== 'undefined') ? { uri: skin.logo } : defaultLogo;
     return (
@@ -104,7 +106,6 @@ Login.defaultProps = {
   fcmToken: null,
 };
 const mapStateToProps = state => ({
-  skin: skinSelector(state),
   mobileDataAllowed: mobileDataAllowedSelector(state),
   fcmToken: fcmFcmTokenSelector(state),
 });
