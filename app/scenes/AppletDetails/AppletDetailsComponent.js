@@ -8,9 +8,6 @@ import { colors } from '../../theme';
 import ActivityList from '../../components/ActivityList';
 // import AppletSummary from '../../components/AppletSummary';
 import AppletCalendar from '../../components/AppletCalendar';
-import AppletFooter from './AppletFooter';
-import AppletAbout from '../../components/AppletAbout';
-import AppletData from '../../components/AppletData';
 import { getResponseInApplet } from '../../state/responses/responses.actions';
 
 
@@ -29,13 +26,6 @@ const styles = StyleSheet.create({
 
 // eslint-disable-next-line
 class AppletDetailsComponent extends React.Component {
-
-  constructor() {
-    super();
-    this.state = {
-      selectedTab: 'survey',
-    };
-  }
 
   getResponseDates() {
     // TODO: a quick hack to add a dot for today's date
@@ -66,42 +56,19 @@ class AppletDetailsComponent extends React.Component {
   }
 
   // eslint-disable-next-line
-  renderActiveTab() {
-    const { selectedTab } = this.state;
-    const {
-      applet,
-      onPressActivity,
-      inProgress,
-      appletData,
-    } = this.props;
+  renderProtocols() {
+    const { onPressActivity } = this.props;
 
     const responseDates = this.getResponseDates() || [];
 
-    switch (selectedTab) {
-      case 'survey':
-        return (
-          <View style={{ flex: 1 }}>
-            <AppletCalendar responseDates={responseDates} />
-            <ActivityList
-              onPressActivity={onPressActivity}
-            />
-          </View>
-        );
-      case 'data':
-        return (
-          <View>
-            <AppletCalendar responseDates={responseDates} />
-            <AppletData
-              applet={applet}
-              appletData={appletData}
-            />
-          </View>
-        );
-      case 'about':
-        return (<AppletAbout about={applet.about ? applet.about.en : ''} />);
-      default:
-        break;
-    }
+    return (
+      <View style={{ flex: 1 }}>
+        <AppletCalendar responseDates={responseDates} />
+        <ActivityList
+          onPressActivity={onPressActivity}
+        />
+      </View>
+    );
   }
 
   handlePress() {
@@ -117,9 +84,6 @@ class AppletDetailsComponent extends React.Component {
       hasInvites,
       primaryColor,
     } = this.props;
-
-    const { selectedTab } = this.state;
-
     return (
       <Container style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -150,13 +114,9 @@ class AppletDetailsComponent extends React.Component {
           }}
         >
           <Content>
-            {this.renderActiveTab()}
+            {this.renderProtocols()}
           </Content>
         </ImageBackground>
-        <AppletFooter
-          active={selectedTab}
-          changeTab={tabName => this.setState({ selectedTab: tabName })}
-        />
       </Container>
     );
   }
@@ -165,7 +125,6 @@ class AppletDetailsComponent extends React.Component {
 AppletDetailsComponent.propTypes = {
   applet: PropTypes.object.isRequired,
   appletData: PropTypes.object.isRequired,
-  inProgress: PropTypes.object.isRequired,
   onPressActivity: PropTypes.func.isRequired,
   onPressBack: PropTypes.func.isRequired,
   onPressSettings: PropTypes.func.isRequired,
