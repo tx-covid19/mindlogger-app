@@ -23,7 +23,7 @@ import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import { toggleMobileDataAllowed } from '../../state/app/app.actions';
 import config from '../../config';
 
-const defaultLogo = require('../../../img/CMI_white_logo.png');
+const defaultLogo = require('../../../img/knockout_university_primary.png');
 
 class Login extends Component {
 
