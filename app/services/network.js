@@ -1,13 +1,11 @@
 import objectToFormData from 'object-to-formdata';
 import RNFetchBlob from 'rn-fetch-blob';
-import { getStore } from '../store';
 // eslint-disable-next-line
 import { btoa } from './helper';
-import { apiHostSelector } from '../state/app/app.selectors';
+import config from '../config';
 
 const apiHost = () => {
-  const state = getStore().getState(); // Get redux state
-  return apiHostSelector(state);
+  return config.defaultApiHost;
 };
 
 const objectToQueryParams = obj => Object.keys(obj).map(
