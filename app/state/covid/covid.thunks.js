@@ -1,6 +1,4 @@
 import { getCovidData } from '../../services/network';
-import { sync } from '../app/app.thunks';
-import { authSelector, userInfoSelector } from '../user/user.selectors';
 
 import {
   setFetchingCovidData,
