@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const backgroundImage = require('../../../img/skyline.jpg');
+const backgroundImage = require('../../../img/tower.jpg');
 
 const AppletListComponent = ({
   applets,
@@ -64,87 +64,88 @@ const AppletListComponent = ({
         style={{ width: '100%', height: '100%', flex: 1 }}
         source={backgroundImage}
       >
-        <SafeAreaView />
-        <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }}>
-          <Left />
-          <Body>
-            <Title>{title}</Title>
-          </Body>
-          <Right style={{ flexDirection: 'row' }}>
-            <Button transparent onPress={onPressDrawer}>
-              <Icon type="FontAwesome" name="user" />
-            </Button>
-          </Right>
-        </Header>
-        {/* <View style={{ flex: 1, backgroundColor: 'transparent' }}> */}
+        <SafeAreaView>
+          <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }}>
+            <Left />
+            <Body>
+              <Title>{title}</Title>
+            </Body>
+            <Right style={{ flexDirection: 'row' }}>
+              <Button transparent onPress={onPressDrawer}>
+                <Icon type="FontAwesome" name="user" />
+              </Button>
+            </Right>
+          </Header>
+          {/* <View style={{ flex: 1, backgroundColor: 'transparent' }}> */}
 
-        {/* <BackgroundBlobs /> */}
-        <ScrollView
-          style={styles.activityList}
-          refreshControl={(
-            <RefreshControl
-              refreshing={isDownloadingApplets}
-              onRefresh={() => {
-                if (!netInfo.isConnected) {
-                  connectionAlert();
-                } else if (netInfo.type === 'cellular' && !mobileDataAllowed) {
-                  mobileDataAlert(toggleMobileDataAllowed);
-                } else {
-                  onPressRefresh();
-                }
-              }}
-            />
-          )}
-          contentContainerStyle={styles.activityListContainer}
-        >
-
-          {applets.map(applet => (
-            <AppletListItem applet={applet} onPress={onPressApplet} key={applet.id} />
-          ))}
-          {/* {
-            applets.length === 0 && isDownloadingApplets
-              ? <BodyText style={styles.sync}>Synchronizing...</BodyText>
-              : <JoinDemoApplets />
-          } */}
-          {
-            invites.length
-              ? <AppletInvite /> : null
-          }
-
-          <View
-            style={{
-              marginTop: 20,
-              marginBottom: 40,
-              alignItems: 'center',
-              alignContent: 'center',
-              textAlign: 'center',
-            }}
+          {/* <BackgroundBlobs /> */}
+          <ScrollView
+            style={styles.activityList}
+            refreshControl={(
+              <RefreshControl
+                refreshing={isDownloadingApplets}
+                onRefresh={() => {
+                  if (!netInfo.isConnected) {
+                    connectionAlert();
+                  } else if (netInfo.type === 'cellular' && !mobileDataAllowed) {
+                    mobileDataAlert(toggleMobileDataAllowed);
+                  } else {
+                    onPressRefresh();
+                  }
+                }}
+              />
+            )}
+            contentContainerStyle={styles.activityListContainer}
           >
-            <TouchableOpacity onPress={onPressGps}>
-            <Text
-                style={{
-                  color: colors.primary,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}
-              >
-                View GPS Data
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onPressAbout}>
-              <Text
-                style={{
-                  color: colors.primary,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                }}
-              >
-                About {config.defaultSkin.name}
-              </Text>
-            </TouchableOpacity>
-          </View>
 
-        </ScrollView>
+            {applets.map(applet => (
+              <AppletListItem applet={applet} onPress={onPressApplet} key={applet.id} />
+            ))}
+            {/* {
+              applets.length === 0 && isDownloadingApplets
+                ? <BodyText style={styles.sync}>Synchronizing...</BodyText>
+                : <JoinDemoApplets />
+            } */}
+            {
+              invites.length
+                ? <AppletInvite /> : null
+            }
+
+            <View
+              style={{
+                marginTop: 20,
+                marginBottom: 40,
+                alignItems: 'center',
+                alignContent: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <TouchableOpacity onPress={onPressGps}>
+                <Text
+                  style={{
+                    color: colors.primary,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  View GPS Data
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onPressAbout}>
+                <Text
+                  style={{
+                    color: colors.primary,
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  About {config.defaultSkin.name}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+          </ScrollView>
+        </SafeAreaView>
       </ImageBackground>
 
     </Container>
