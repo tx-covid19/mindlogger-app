@@ -40,14 +40,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const backgroundImage = require('../../../img/bevomobile.jpg');
+const backgroundImage = require('../../../img/bevoEdited.jpg');
 
 const AppletListComponent = ({
   applets,
   invites,
   isDownloadingApplets,
   title,
-  primaryColor,
   onPressDrawer,
   onPressReportTest,
   onPressRefresh,
@@ -66,7 +65,7 @@ const AppletListComponent = ({
         source={backgroundImage}
       >
         <SafeAreaView>
-          <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }}>
+          <Header>
             <Left />
             <Body>
               <Title>{title}</Title>
@@ -167,7 +166,6 @@ AppletListComponent.propTypes = {
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  primaryColor: PropTypes.string.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
 };
