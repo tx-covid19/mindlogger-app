@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, Image, StatusBar } from 'react-native';
+import {
+  TouchableOpacity,
+  Image,
+  StatusBar,
+} from 'react-native';
 import { connect } from 'react-redux';
 import {
   Container,
@@ -19,6 +23,8 @@ import LoginForm from './LoginForm';
 import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import { toggleMobileDataAllowed } from '../../state/app/app.actions';
 import config from '../../config';
+
+const logo = require('../../../img/textLogo.png');
 
 class Login extends Component {
   onAbout = () => {
@@ -76,6 +82,7 @@ class Login extends Component {
             <TouchableOpacity onPress={this.onAbout}>
               <Text style={styles.whiteText}>{`What is ${title}?`}</Text>
             </TouchableOpacity>
+            <Image style={styles.logo} source={logo} />
           </View>
         </Content>
       </Container>

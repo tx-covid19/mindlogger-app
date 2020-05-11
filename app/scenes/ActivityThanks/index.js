@@ -11,6 +11,8 @@ import theme from '../../themes/base-theme';
 import FunButton from '../../components/core/FunButton';
 import { getResponseInActivity } from '../../state/responses/responses.actions';
 
+const backgroundImage = require('../../../img/tower.jpg');
+
 const styles = StyleSheet.create({
   box: {
     padding: 20,
@@ -20,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // backgroundColor: 'white',
     fontFamily: theme.fontFamily,
+    backgroundColor: 'rgba(0,0,0,.5)',
   },
 });
 
@@ -31,14 +34,12 @@ const ActivityThanks = ({ getResponseInActivity }) => {
   return (
     <ImageBackground
       style={{ width: '100%', height: '100%', flex: 1 }}
-      source={{
-        uri: 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-      }}
+      source={backgroundImage}
     >
       <View style={styles.box}>
-        <Heading style={{ fontFamily: theme.fontFamily }}>Thanks!</Heading>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
-          We've saved your answers!
+        <Heading style={{ color: 'white', fontFamily: theme.fontFamily }}>Thanks!</Heading>
+        <BodyText style={{ color: 'white', fontFamily: theme.fontFamily }}>
+          We've saved your answers.
         </BodyText>
   
         <FunButton onPress={onPressStart}>
