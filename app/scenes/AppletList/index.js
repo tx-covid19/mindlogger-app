@@ -44,7 +44,6 @@ class AppletList extends Component {
         invites={invites}
         isDownloadingApplets={isDownloadingApplets}
         title="HornSense"
-        primaryColor={skin.colors.primary}
         onPressDrawer={() => Actions.push('settings')}
         onPressReportTest={() => Actions.push('report_test')}
         onPressRefresh={this.refresh}
