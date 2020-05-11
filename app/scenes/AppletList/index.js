@@ -43,7 +43,7 @@ class AppletList extends Component {
         applets={applets}
         invites={invites}
         isDownloadingApplets={isDownloadingApplets}
-        title={`Hi ${user ? user.firstName : ''}!`}
+        title="HornSense"
         primaryColor={skin.colors.primary}
         onPressDrawer={() => Actions.push('settings')}
         onPressReportTest={() => Actions.push('report_test')}
