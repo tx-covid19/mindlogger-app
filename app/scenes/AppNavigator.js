@@ -18,6 +18,7 @@ import InfoAct from './InfoAct';
 import Login from './Login';
 import LogoutWarning from './LogoutWarning';
 import Settings from './Settings';
+import ReportTest from './ReportTest';
 import ChangePassword from './ChangePassword';
 import Splash from './Splash';
 import VolumeInfo from './VolumeInfo';
@@ -48,6 +49,7 @@ const Navigator = Actions.create(
           <Scene key="forgot_password" component={ForgotPassword} />
           <Scene key="login" component={Login} />
           <Scene key="settings" component={Settings} />
+          <Scene key="report_test" component={ReportTest} />
           <Scene key="change_password" component={ChangePassword} />
           <Scene key="applet_settings" component={AppletSettings} />
         </Scene>

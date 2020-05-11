@@ -40,15 +40,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const backgroundImage = require('../../../img/bevomobile.jpg');
+const backgroundImage = require('../../../img/bevoEdited.jpg');
 
 const AppletListComponent = ({
   applets,
   invites,
   isDownloadingApplets,
   title,
-  primaryColor,
   onPressDrawer,
+  onPressReportTest,
   onPressRefresh,
   onPressAbout,
   onPressGps,
@@ -65,7 +65,7 @@ const AppletListComponent = ({
         source={backgroundImage}
       >
         <SafeAreaView>
-          <Header style={{ backgroundColor: 'transparent', borderBottomWidth: 0 }}>
+          <Header>
             <Left />
             <Body>
               <Title>{title}</Title>
@@ -73,6 +73,9 @@ const AppletListComponent = ({
             <Right style={{ flexDirection: 'row' }}>
               <Button transparent onPress={onPressDrawer}>
                 <Icon type="FontAwesome" name="user" />
+              </Button>
+              <Button transparent onPress={onPressReportTest}>
+                <Icon type="FontAwesome" name="qrcode" />
               </Button>
             </Right>
           </Header>
@@ -157,12 +160,12 @@ AppletListComponent.propTypes = {
   invites: PropTypes.array.isRequired,
   isDownloadingApplets: PropTypes.bool.isRequired,
   onPressDrawer: PropTypes.func.isRequired,
+  onPressReportTest: PropTypes.func.isRequired,
   onPressAbout: PropTypes.func.isRequired,
   onPressGps: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
-  primaryColor: PropTypes.string.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
 };
