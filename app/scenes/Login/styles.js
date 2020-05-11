@@ -61,9 +61,7 @@ export default {
     bottom: 0,
   },
   logo: {
-    marginTop: 20,
-    height: 63,
-    width: 78,
+    height: 140,
     resizeMode: 'contain',
     alignSelf: 'center',
   },
