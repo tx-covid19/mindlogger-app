@@ -1,4 +1,5 @@
-import { getCovidData } from '../../services/network';
+import { getCovidData as getCovidDataNetwork } from '../../services/network';
+import { authSelector } from '../../state/user/user.selectors';
 
 import {
   setFetchingCovidData,
@@ -10,7 +11,7 @@ export const getCovidData = zipcode => (dispatch, getState) => {
   const auth = authSelector(state);
 
   dispatch(setFetchingCovidData(true));
-  getCovidData({ authToken: auth.token, zipcode }).then((resp) => {
+  getCovidDataNetwork({ authToken: auth.token, zipcode }).then((resp) => {
     dispatch(updateCovidData(resp));
   }).catch((err) => {
     console.warn(err.message);
