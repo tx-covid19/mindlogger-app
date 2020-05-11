@@ -7,9 +7,6 @@ import {
   Content,
   Text,
   View,
-  Icon,
-  Footer,
-  Right,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { SubmissionError } from 'redux-form';
@@ -23,10 +20,7 @@ import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import { toggleMobileDataAllowed } from '../../state/app/app.actions';
 import config from '../../config';
 
-const defaultLogo = require('../../../img/CMI_white_logo.png');
-
 class Login extends Component {
-
   onAbout = () => {
     Actions.about_app();
   }
@@ -64,7 +58,6 @@ class Login extends Component {
     const { mobileDataAllowed, toggleMobileDataAllowed } = this.props;
     const skin = config.defaultSkin;
     const title = skin.name;
-    const logo = (typeof skin.logo !== 'undefined') ? { uri: skin.logo } : defaultLogo;
     return (
       <Container>
         <StatusBar barStyle="light-content" />
@@ -84,11 +77,6 @@ class Login extends Component {
               <Text style={styles.whiteText}>{`What is ${title}?`}</Text>
             </TouchableOpacity>
           </View>
-          <Image
-            square
-            style={styles.logo}
-            source={logo}
-          />
         </Content>
       </Container>
     );
