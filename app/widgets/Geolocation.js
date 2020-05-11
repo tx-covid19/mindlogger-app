@@ -5,6 +5,7 @@ import NativeGeolocation from '@react-native-community/geolocation';
 import { Icon } from 'native-base';
 import Permissions, { PERMISSIONS } from 'react-native-permissions';
 import { colors } from '../theme';
+import config from '../config';
 
 const styles = StyleSheet.create({
   locationButton: {
@@ -81,7 +82,7 @@ export const Geolocation = ({ value, onChange }) => {
           <View>
             <Text style={styles.infoText}>
               You must enable Location services to complete this task. Please
-              grant MindLogger permission in your iOS Settings and press the
+              grant {config.defaultSkin.name} permission in your iOS Settings and press the
               button again.
             </Text>
           </View>
@@ -92,7 +93,7 @@ export const Geolocation = ({ value, onChange }) => {
           <View>
             <Text style={styles.infoText}>
               You must enable Location services to complete this task. Please
-              press the button again and grant MindLogger permission to use your
+              press the button again and grant {config.defaultSkin.name} permission to use your
               location.
             </Text>
           </View>

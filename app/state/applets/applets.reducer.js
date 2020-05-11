@@ -1,6 +1,4 @@
 import APPLET_CONSTANTS from './applets.constants';
-import demoApplet from '../../applets/demoApplet.json';
-
 
 export const initialState = {
   applets: [],

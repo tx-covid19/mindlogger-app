@@ -7,9 +7,6 @@ import {
   Content,
   Text,
   View,
-  Icon,
-  Footer,
-  Right,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import { SubmissionError } from 'redux-form';
@@ -19,13 +16,11 @@ import styles from './styles';
 import { signInSuccessful } from '../../state/user/user.thunks';
 import { signIn } from '../../services/network';
 import LoginForm from './LoginForm';
-import { skinSelector, mobileDataAllowedSelector } from '../../state/app/app.selectors';
+import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import { toggleMobileDataAllowed } from '../../state/app/app.actions';
-
-const defaultLogo = require('../../../img/CMI_white_logo.png');
+import config from '../../config';
 
 class Login extends Component {
-
   onAbout = () => {
     Actions.about_app();
   }
@@ -60,9 +55,9 @@ class Login extends Component {
   }
 
   render() {
-    const { skin, mobileDataAllowed, toggleMobileDataAllowed } = this.props;
+    const { mobileDataAllowed, toggleMobileDataAllowed } = this.props;
+    const skin = config.defaultSkin;
     const title = skin.name;
-    const logo = (typeof skin.logo !== 'undefined') ? { uri: skin.logo } : defaultLogo;
     return (
       <Container>
         <StatusBar barStyle="light-content" />
@@ -82,11 +77,6 @@ class Login extends Component {
               <Text style={styles.whiteText}>{`What is ${title}?`}</Text>
             </TouchableOpacity>
           </View>
-          <Image
-            square
-            style={styles.logo}
-            source={logo}
-          />
         </Content>
       </Container>
     );
@@ -104,7 +94,6 @@ Login.defaultProps = {
   fcmToken: null,
 };
 const mapStateToProps = state => ({
-  skin: skinSelector(state),
   mobileDataAllowed: mobileDataAllowedSelector(state),
   fcmToken: fcmFcmTokenSelector(state),
 });
