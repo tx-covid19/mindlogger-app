@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const backgroundImage = require('../../../img/bevomobile.jpg');
+const backgroundImage = require('../../../img/bevoEdited.jpg');
 
 const AppletListComponent = ({
   applets,
