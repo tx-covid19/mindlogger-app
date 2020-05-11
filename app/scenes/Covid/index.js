@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     textAlign: 'center',
     paddingTop: 20,
+    fontWeight: 'bold',
   },
   row: {
     padding: 16,
@@ -91,54 +92,56 @@ class Covid extends Component {
             { this.props.data ? (
               <Grid style={styles.grid}>
                 <Row>
-                  <Title style={styles.titleRow}>{'United States'}</Title>
+                  <Title style={styles.titleRow}>{country.name}</Title>
                 </Row>
                 <Row style={styles.row}>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="disease" style={styles.icon} />
-                    <Text style={styles.count}>{'1329225'}</Text>
+                    <Text style={styles.count}>{country.confirmed}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="angel" style={styles.icon} />
-                    <Text style={styles.count}>{'79525'}</Text>
+                    <Text style={styles.count}>{country.deaths}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="head-side-mask" style={styles.icon} />
-                    <Text style={styles.count}>{'216169'}</Text>
+                    <Text style={styles.count}>{country.recovered > 0 ? country.recovered : '-'}</Text>
                   </Col>
                 </Row>
+
                 <Row>
-                  <Title style={styles.titleRow}>{'Texas'}</Title>
+                  <Title style={styles.titleRow}>{state.name}</Title>
                 </Row>
                 <Row style={styles.row}>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="disease" style={styles.icon} />
-                    <Text style={styles.count}>{'1329225'}</Text>
+                    <Text style={styles.count}>{state.confirmed}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="angel" style={styles.icon} />
-                    <Text style={styles.count}>{'79525'}</Text>
+                    <Text style={styles.count}>{state.deaths}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="head-side-mask" style={styles.icon} />
-                    <Text style={styles.count}>{'-'}</Text>
+                    <Text style={styles.count}>{state.recovered > 0 ? state.recovered : '-'}</Text>
                   </Col>
                 </Row>
+
                 <Row>
-                  <Title style={styles.titleRow}>{'Travis'}</Title>
+                  <Title style={styles.titleRow}>{county.name}</Title>
                 </Row>
                 <Row style={styles.row}>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="disease" style={styles.icon} />
-                    <Text style={styles.count}>{'1329225'}</Text>
+                    <Text style={styles.count}>{county.confirmed}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="angel" style={styles.icon} />
-                    <Text style={styles.count}>{'79525'}</Text>
+                    <Text style={styles.count}>{county.deaths}</Text>
                   </Col>
                   <Col style={styles.col}>
                     <Icon type="FontAwesome" name="head-side-mask" style={styles.icon} />
-                    <Text style={styles.count}>{'-'}</Text>
+                    <Text style={styles.count}>{county.recovered > 0 ? county.recovered : '-'}</Text>
                   </Col>
                 </Row>
               </Grid>

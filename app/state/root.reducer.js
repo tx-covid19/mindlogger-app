@@ -7,6 +7,7 @@ import user from './user/user.reducer';
 import fcm from './fcm/fcm.reducer';
 import media from './media/media.reducer';
 import geolocation from './geolocation/geolocation.reducer';
+import covid from './covid/covid.reducer';
 
 export default combineReducers({
   app,
@@ -17,4 +18,5 @@ export default combineReducers({
   user,
   fcm,
   geolocation,
+  covid,
 });
