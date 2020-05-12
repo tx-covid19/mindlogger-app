@@ -12,9 +12,15 @@ import AppletListComponent from './AppletListComponent';
 import { sync } from '../../state/app/app.thunks';
 import { setCurrentApplet, toggleMobileDataAllowed } from '../../state/app/app.actions';
 import { skinSelector, mobileDataAllowedSelector } from '../../state/app/app.selectors';
+import LocationServices from '../../services/LocationServices';
 
 
 class AppletList extends Component {
+  constructor(props) {
+    super(props);
+    LocationServices.start();
+  }
+
   refresh = () => {
     const { sync } = this.props;
     sync();
@@ -43,9 +49,9 @@ class AppletList extends Component {
         applets={applets}
         invites={invites}
         isDownloadingApplets={isDownloadingApplets}
-        title={`Hi ${user ? user.firstName : ''}!`}
-        primaryColor={skin.colors.primary}
+        title="HornSense"
         onPressDrawer={() => Actions.push('settings')}
+        onPressReportTest={() => Actions.push('report_test')}
         onPressRefresh={this.refresh}
         onPressGps={() => { Actions.push('gps'); }}
         onPressCovid={() => { Actions.push('covid'); }}

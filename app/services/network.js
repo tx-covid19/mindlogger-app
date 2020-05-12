@@ -1,13 +1,11 @@
 import objectToFormData from 'object-to-formdata';
 import RNFetchBlob from 'rn-fetch-blob';
-import { getStore } from '../store';
 // eslint-disable-next-line
 import { btoa } from './helper';
-import { apiHostSelector } from '../state/app/app.selectors';
+import config from '../config';
 
 const apiHost = () => {
-  const state = getStore().getState(); // Get redux state
-  return apiHostSelector(state);
+  return config.defaultApiHost;
 };
 
 const objectToQueryParams = obj => Object.keys(obj).map(
@@ -289,3 +287,16 @@ export const getCovidData = ({ authToken, zipcode }) => get(
   authToken,
   { zipcode },
 );
+
+export const sendGeolocationStatistics = (authToken, body) => {
+  const url = `${apiHost()}/gps`;
+  const headers = {
+    'Girder-Token': authToken,
+  };
+  return fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers,
+    body,
+  }).then(res => (res.status === 200 ? res.json() : Promise.reject(res)));
+};

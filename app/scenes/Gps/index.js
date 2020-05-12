@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, Text, Platform } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Content, Icon, View, Header, Right, Body, Title, Left, Button } from 'native-base';
+import {
+  Container,
+  Content,
+  Icon,
+  View,
+  Header,
+  Right,
+  Body,
+  Title,
+  Left,
+  Button,
+} from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import {
   PERMISSIONS,
@@ -27,16 +38,6 @@ class GpsData extends Component {
 
   onClose = () => {
     Actions.pop();
-  }
-
-  onStart = () => {
-    LocationServices.start();
-    console.log('starting recording');
-  }
-
-  onStop = () => {
-    LocationServices.stop();
-    console.log('stopping recording');
   }
 
   onClear = () => {
@@ -92,27 +93,6 @@ class GpsData extends Component {
         <Content>
           <View>
             <Button
-              onPress={() => this.onStart()}
-              style={styles.button}
-            >
-              <Text
-                style={styles.buttonText}
-              >
-                Start
-              </Text>
-            </Button>
-            <Button
-              onPress={() => this.onStop()}
-              style={styles.button}
-            >
-              <Text
-                style={styles.buttonText}
-              >
-                Stop
-              </Text>
-            </Button>
-
-            <Button
               onPress={() => this.onClear()}
               style={styles.button}
             >
@@ -122,7 +102,6 @@ class GpsData extends Component {
                 Clear
               </Text>
             </Button>
-
             <Text>
               {data}
             </Text>

@@ -4,7 +4,17 @@ export const clearGeolocationData = () => ({
   type: GEOLOCATION_CONSTANTS.CLEAR,
 });
 
-export const setGeolocationData = info => ({
+export const setGeolocationData = data => ({
   type: GEOLOCATION_CONSTANTS.SET_DATA,
-  payload: info,
+  payload: data,
+});
+
+export const setStatistics = stats => ({
+  type: GEOLOCATION_CONSTANTS.SET_STATISTICS,
+  payload: stats,
+});
+
+export const setStatisticsSentDate = newDate => ({
+  type: GEOLOCATION_CONSTANTS.SET_STATISTICS_SENT,
+  payload: newDate,
 });

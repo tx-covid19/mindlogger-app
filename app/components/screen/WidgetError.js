@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { colors } from '../../theme';
+import config from '../../config';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +28,7 @@ const WidgetError = () => (
       There was a problem loading this screen.
     </Text>
     <Text style={styles.body}>
-      Please ensure you have the latest version of MindLogger installed, then
+      Please ensure you have the latest version of {config.defaultSkin.name} installed, then
       contact your activity administrator if the problem still occurs.
     </Text>
   </View>
