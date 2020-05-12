@@ -53,7 +53,6 @@ class AppletList extends Component {
         onPressDrawer={() => Actions.push('settings')}
         onPressReportTest={() => Actions.push('report_test')}
         onPressRefresh={this.refresh}
-        onPressGps={() => { Actions.push('gps'); }}
         onPressAbout={() => { Actions.push('about_app'); }}
         onPressApplet={this.handlePressApplet}
         mobileDataAllowed={mobileDataAllowed}
