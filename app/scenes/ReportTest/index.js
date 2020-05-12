@@ -24,7 +24,7 @@ class ReportTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scanOpen: false,
+      scanOpen: true,
     };
   }
 
