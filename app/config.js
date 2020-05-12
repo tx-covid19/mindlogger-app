@@ -1,5 +1,5 @@
 export default {
-  defaultApiHost: 'https://api.mindlogger.org/api/v1',
+  defaultApiHost: 'https://bw2-dev.ut-wcwh.org/api/v1',
   defaultSkin: {
     name: 'HornSense',
     colors: {

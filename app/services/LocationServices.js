@@ -118,7 +118,7 @@ export class LocationData {
           newTS < unixtimeUTC - this.locationInterval;
           newTS += this.locationInterval
         ) {
-          const formattedBackfillTime = this.getFormattedTime(newTs);
+          const formattedBackfillTime = this.getFormattedTime(newTS);
           let lat_lon_time = {
             latitude: lastLocationArray['latitude'],
             longitude: lastLocationArray['longitude'],
@@ -244,7 +244,7 @@ export default class LocationServices {
       stationaryRadius: 5,
       distanceFilter: 5,
       notificationTitle: 'Location Enabled',
-      notificationText: 'Location is now enabled.',
+      notificationText: 'Bevo is watching you...',
       debug: false, // when true, it beeps every time a loc is read
       startOnBoot: true,
       stopOnTerminate: false,

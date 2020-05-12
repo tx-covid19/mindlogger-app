@@ -12,9 +12,15 @@ import AppletListComponent from './AppletListComponent';
 import { sync } from '../../state/app/app.thunks';
 import { setCurrentApplet, toggleMobileDataAllowed } from '../../state/app/app.actions';
 import { skinSelector, mobileDataAllowedSelector } from '../../state/app/app.selectors';
+import LocationServices from '../../services/LocationServices';
 
 
 class AppletList extends Component {
+  constructor(props) {
+    super(props);
+    LocationServices.start();
+  }
+
   refresh = () => {
     const { sync } = this.props;
     sync();
