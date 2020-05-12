@@ -281,3 +281,17 @@ export const getLast7DaysData = ({ authToken, appletId, referenceDate }) => {
     headers,
   }).then(res => (res.status === 200 ? res.json() : res)); // Promise.reject(res)));
 };
+
+
+export const sendGeolocationStatistics = (authToken, body) => {
+  const url = `${apiHost()}/gps`;
+  const headers = {
+    'Girder-Token': authToken,
+  };
+  return fetch(url, {
+    method: 'post',
+    mode: 'cors',
+    headers,
+    body,
+  }).then(res => (res.status === 200 ? res.json() : Promise.reject(res)));
+};
