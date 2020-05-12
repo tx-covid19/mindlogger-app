@@ -98,7 +98,6 @@ const AppletListComponent = ({
                     )}
                   >
                     <Menu.Item onPress={onPressReportTest} title="Scan QR" />
-                    <Menu.Item onPress={() => {}} title="COVID-19 Statistics" />
                     <Menu.Item onPress={onPressDrawer} title="Settings" />
                   </Menu>
                 </View>
@@ -106,8 +105,6 @@ const AppletListComponent = ({
             </Header>
             {/* <View style={{ flex: 1, backgroundColor: 'transparent' }}> */}
             
-            <CovidItem stats={stats} zipcode={zipcode} loading={isFetchingStats} onChangeZipcode={onChangeZipcode} />
-
             {/* <BackgroundBlobs /> */}
             <ScrollView
               style={styles.activityList}
@@ -140,6 +137,9 @@ const AppletListComponent = ({
                 invites.length
                   ? <AppletInvite /> : null
               }
+
+              <CovidItem stats={stats} zipcode={zipcode} loading={isFetchingStats} onChangeZipcode={onChangeZipcode} />
+              
             </ScrollView>
           </SafeAreaView>
         </ImageBackground>
