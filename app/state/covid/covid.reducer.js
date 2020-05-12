@@ -1,23 +1,30 @@
 import COVID_CONSTANTS from './covid.constants';
 
 export const initialState = {
-  data: {},
-  isFetchingData: false,
+  stats: null,
+  zipcode: '',
+  isFetchingStats: false,
 };
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case COVID_CONSTANTS.CLEAR:
+    case COVID_CONSTANTS.CLEAR_COVID_STATS:
       return initialState;
-    case COVID_CONSTANTS.SET_COVID_DATA:
+    case COVID_CONSTANTS.SET_COVID_ZIPCODE:
       return {
         ...state,
-        data: action.payload,
+        zipcode: action.payload.zipcode,
       };
-    case COVID_CONSTANTS.SET_FETCHING_COVID_DATA:
+    case COVID_CONSTANTS.SET_COVID_STATS:
       return {
         ...state,
-        isFetchingData: action.payload,
+        stats: action.payload.stats,
+        zipcode: action.payload.zipcode,
+      };
+    case COVID_CONSTANTS.SET_FETCHING_COVID_STATS:
+      return {
+        ...state,
+        isFetchingStats: action.payload,
       };
     default:
       return state;

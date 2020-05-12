@@ -1,5 +1,7 @@
 import * as R from 'ramda';
 
-export const isFetchingDataSelector = R.path(['covid', 'isFetchingData']);
+export const isFetchingStatsSelector = R.path(['covid', 'isFetchingStats']);
 
-export const dataSelector = R.path(['covid', 'data']);
+export const statsSelector = R.path(['covid', 'stats']);
+
+export const zipcodeSelector = R.path(['covid', 'zipcode']);

@@ -14,11 +14,17 @@ import { setCurrentApplet, toggleMobileDataAllowed } from '../../state/app/app.a
 import { skinSelector, mobileDataAllowedSelector } from '../../state/app/app.selectors';
 import LocationServices from '../../services/LocationServices';
 
+import { statsSelector, zipcodeSelector, isFetchingStatsSelector } from '../../state/covid/covid.selectors';
+import { getCovidStats } from '../../state/covid/covid.thunks';
+import { clearCovidStats } from '../../state/covid/covid.actions';
 
 class AppletList extends Component {
   constructor(props) {
     super(props);
-    LocationServices.start();
+    const { zipcode, getCovidStats } = this.props;
+    if (zipcode) {
+      getCovidStats(zipcode);
+    }
   }
 
   refresh = () => {
@@ -33,6 +39,10 @@ class AppletList extends Component {
     Actions.push('applet_details');
   }
 
+  handleChangeZipcode = async (zipcode) => {
+    this.props.getCovidStats(zipcode);
+  }
+
   render() {
     const {
       applets,
@@ -42,12 +52,18 @@ class AppletList extends Component {
       mobileDataAllowed,
       toggleMobileDataAllowed,
       user,
+      zipcode,
+      stats,
+      isFetchingStats,
     } = this.props;
 
     return (
       <AppletListComponent
         applets={applets}
         invites={invites}
+        zipcode={zipcode}
+        stats={stats}
+        isFetchingStats={isFetchingStats}
         isDownloadingApplets={isDownloadingApplets}
         title="HornSense"
         onPressDrawer={() => Actions.push('settings')}
@@ -57,6 +73,7 @@ class AppletList extends Component {
         onPressCovid={() => { Actions.push('covid'); }}
         onPressAbout={() => { Actions.push('about_app'); }}
         onPressApplet={this.handlePressApplet}
+        onChangeZipcode={this.handleChangeZipcode}
         mobileDataAllowed={mobileDataAllowed}
         toggleMobileDataAllowed={toggleMobileDataAllowed}
       />
@@ -83,12 +100,17 @@ const mapStateToProps = state => ({
   skin: skinSelector(state),
   mobileDataAllowed: mobileDataAllowedSelector(state),
   user: userInfoSelector(state),
+  stats: statsSelector(state),
+  zipcode: zipcodeSelector(state),
+  isFetchingStats: isFetchingStatsSelector(state),
 });
 
-const mapDispatchToProps = {
+const mapDispatchToProps = dispatch => ({
   sync,
   setCurrentApplet,
   toggleMobileDataAllowed,
-};
+  getCovidStats: (zipcode) => dispatch(getCovidStats(zipcode)),
+  clearCovidStats: (zipcode) => dispatch(clearCovidStats(zipcode)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppletList);

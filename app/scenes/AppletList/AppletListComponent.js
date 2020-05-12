@@ -11,10 +11,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Container, Header, Title, Button, Icon, Body, Right, Left } from 'native-base';
+import { Container, Header, Title, Button, Icon, Body, Right, Left, BodyText } from 'native-base';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { colors } from '../../theme';
 import AppletListItem from '../../components/AppletListItem';
+import CovidItem from '../../components/CovidItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
 import config from '../../config';
@@ -51,14 +52,17 @@ const AppletListComponent = ({
   applets,
   invites,
   isDownloadingApplets,
+  isFetchingStats,
   title,
+  stats,
+  zipcode,
   onPressDrawer,
   onPressReportTest,
   onPressRefresh,
   onPressAbout,
-  onPressCovid,
   onPressGps,
   onPressApplet,
+  onChangeZipcode,
   mobileDataAllowed,
   toggleMobileDataAllowed,
 }) => {
@@ -120,6 +124,8 @@ const AppletListComponent = ({
                 ? <AppletInvite /> : null
             }
 
+            <CovidItem stats={stats} zipcode={zipcode} loading={isFetchingStats} onChangeZipcode={onChangeZipcode} />
+
             <View
               style={{
                 marginTop: 20,
@@ -138,13 +144,6 @@ const AppletListComponent = ({
                   }}
                 >
                   View GPS Data
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={onPressCovid}>
-                <Text
-                  style={styles.menu}
-                >
-                  View Covid Data
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={onPressAbout}>
@@ -179,6 +178,7 @@ AppletListComponent.propTypes = {
   onPressGps: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
+  onChangeZipcode: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
