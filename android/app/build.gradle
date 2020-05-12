@@ -127,7 +127,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "lab.covidut.data"
+        applicationId "org.utwcwh.hornsense"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 149
@@ -195,7 +195,6 @@ dependencies {
     implementation "com.google.firebase:firebase-core:16.0.9"
     implementation "com.google.firebase:firebase-messaging:18.0.0"
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
-    compile project(':@mauron85_react-native-background-geolocation')
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
