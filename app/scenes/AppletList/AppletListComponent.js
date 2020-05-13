@@ -3,15 +3,13 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  Text,
   ImageBackground,
   RefreshControl,
   StatusBar,
-  TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Container, Header, Title, Button, Icon, Body, Right, Left, BodyText } from 'native-base';
+import { Container, Header, Title, Button, Icon, Body, Right, Left } from 'native-base';
 import { useNetInfo } from '@react-native-community/netinfo';
 import {
   Menu,
@@ -22,7 +20,6 @@ import AppletListItem from '../../components/AppletListItem';
 import CovidItem from '../../components/CovidItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
-import config from '../../config';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +60,6 @@ const AppletListComponent = ({
   onPressDrawer,
   onPressReportTest,
   onPressRefresh,
-  onPressAbout,
   onPressApplet,
   onChangeZipcode,
   mobileDataAllowed,
@@ -103,9 +99,6 @@ const AppletListComponent = ({
                 </View>
               </Right>
             </Header>
-            {/* <View style={{ flex: 1, backgroundColor: 'transparent' }}> */}
-            
-            {/* <BackgroundBlobs /> */}
             <ScrollView
               style={styles.activityList}
               refreshControl={(
@@ -128,18 +121,14 @@ const AppletListComponent = ({
               {applets.map(applet => (
                 <AppletListItem applet={applet} onPress={onPressApplet} key={applet.id} />
               ))}
-              {/* {
-                applets.length === 0 && isDownloadingApplets
-                  ? <BodyText style={styles.sync}>Synchronizing...</BodyText>
-                  : <JoinDemoApplets />
-              } */}
-              {
-                invites.length
-                  ? <AppletInvite /> : null
-              }
+              {invites.length ? <AppletInvite /> : null}
 
-              <CovidItem stats={stats} zipcode={zipcode} loading={isFetchingStats} onChangeZipcode={onChangeZipcode} />
-              
+              <CovidItem
+                stats={stats}
+                zipcode={zipcode}
+                loading={isFetchingStats}
+                onChangeZipcode={onChangeZipcode}
+              />
             </ScrollView>
           </SafeAreaView>
         </ImageBackground>
@@ -156,13 +145,15 @@ AppletListComponent.propTypes = {
   isDownloadingApplets: PropTypes.bool.isRequired,
   onPressDrawer: PropTypes.func.isRequired,
   onPressReportTest: PropTypes.func.isRequired,
-  onPressAbout: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
   onChangeZipcode: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
+  isFetchingStats: PropTypes.bool.isRequired,
+  stats: PropTypes.object.isRequired,
+  zipcode: PropTypes.string.isRequired,
 };
 
 export default AppletListComponent;

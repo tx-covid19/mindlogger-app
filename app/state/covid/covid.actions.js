@@ -1,6 +1,6 @@
 import COVID_CONSTANTS from './covid.constants';
 
-export const updateCovidZipcode = (zipcode) => ({
+export const updateCovidZipcode = zipcode => ({
   type: COVID_CONSTANTS.SET_COVID_ZIPCODE,
   payload: { zipcode },
 });
