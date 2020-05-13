@@ -19,6 +19,7 @@ const INPUTS = 'reprolib:terms/inputs';
 const IS_ABOUT = 'reprolib:terms/isAbout';
 const ITEM_LIST_ELEMENT = 'http://schema.org/itemListElement';
 const MAX_VALUE = 'http://schema.org/maxValue';
+const STEP_VALUE = 'http://schema.org/stepValue';
 const MEDIA = 'reprolib:terms/media';
 const MIN_VALUE = 'http://schema.org/minValue';
 const MULTIPLE_CHOICE = 'reprolib:terms/multipleChoice';
@@ -78,6 +79,9 @@ export const flattenValueConstraints = vcObj => Object.keys(vcObj).reduce((accum
   }
   if (key === MIN_VALUE) {
     return { ...accumulator, minValue: R.path([key, 0, '@value'], vcObj) };
+  }
+  if (key === STEP_VALUE) {
+    return { ...accumulator, stepValue: R.path([key, 0, '@value'], vcObj) };
   }
   if (key === MULTIPLE_CHOICE) {
     return { ...accumulator, multipleChoice: R.path([key, 0, '@value'], vcObj) };
