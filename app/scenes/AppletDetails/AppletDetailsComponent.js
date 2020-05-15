@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, StatusBar, View, ImageBackground } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { Container, Header, Title, Content, Button, Icon, Left, Body, Right } from 'native-base';
 import moment from 'moment';
 import { colors } from '../../theme';
@@ -32,19 +32,8 @@ class AppletDetailsComponent extends React.Component {
     // TODO: a quick hack to add a dot for today's date
     // if the user has responded today. This is instead of
     // refreshing all the applets
-    const { applet, appletData } = this.props;
-    let allDates = [];
-    const mapper = (resp) => {
-      const d = resp.map(r => r.date);
-      allDates = allDates.concat(d);
-      return allDates;
-    };
-
-    const items = Object.keys(appletData);
-    // R.forEach(mapper, appletData.responses);
-    // const items = Object.keys(appletData.responses);
-    // items.map(item => mapper(appletData.responses[item]));
-    // items.map(item => mapper(appletData.responses[item]));
+    const { applet } = this.props;
+    const allDates = [];
 
     if (allDates.length) {
       const maxDate = moment.max(allDates.map(d => moment(d)));
@@ -117,7 +106,6 @@ class AppletDetailsComponent extends React.Component {
 
 AppletDetailsComponent.propTypes = {
   applet: PropTypes.object.isRequired,
-  appletData: PropTypes.object.isRequired,
   onPressActivity: PropTypes.func.isRequired,
   onPressBack: PropTypes.func.isRequired,
   onPressSettings: PropTypes.func.isRequired,

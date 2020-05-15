@@ -41,7 +41,7 @@ const ActivityThanks = ({ getResponseInActivity }) => {
         <BodyText style={{ color: 'white', fontFamily: theme.fontFamily }}>
           We've saved your answers.
         </BodyText>
-  
+
         <FunButton onPress={onPressStart}>
           Close
         </FunButton>

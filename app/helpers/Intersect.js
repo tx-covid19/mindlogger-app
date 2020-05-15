@@ -9,15 +9,15 @@
  * @return {boolean} true if the two locations meet the criteria for nearby
  */
 export function areLocationsNearby(lat1, lon1, lat2, lon2) {
-  let nearbyDistance = 20; // in meters, anything closer is "nearby"
+  const nearbyDistance = 20; // in meters, anything closer is "nearby"
 
   // these numbers from https://en.wikipedia.org/wiki/Decimal_degrees
-  let notNearbyInLatitude = 0.00017966; // = nearbyDistance / 111320
-  let notNearbyInLongitude_23Lat = 0.00019518; // = nearbyDistance / 102470
-  let notNearbyInLongitude_45Lat = 0.0002541; // = nearbyDistance / 78710
-  let notNearbyInLongitude_67Lat = 0.00045981; // = nearbyDistance / 43496
+  const notNearbyInLatitude = 0.00017966; // = nearbyDistance / 111320
+  const notNearbyInLongitude_23Lat = 0.00019518; // = nearbyDistance / 102470
+  const notNearbyInLongitude_45Lat = 0.0002541; // = nearbyDistance / 78710
+  const notNearbyInLongitude_67Lat = 0.00045981; // = nearbyDistance / 43496
 
-  let deltaLon = lon2 - lon1;
+  const deltaLon = lon2 - lon1;
 
   // Initial checks we can do quickly.  The idea is to filter out any cases where the
   //   difference in latitude or the difference in longitude must be larger than the
@@ -36,15 +36,14 @@ export function areLocationsNearby(lat1, lon1, lat2, lon2) {
   //    https://en.wikipedia.org/wiki/Spherical_law_of_cosines
   //
   // Calculates the distance in meters
-  let p1 = (lat1 * Math.PI) / 180;
-  let p2 = (lat2 * Math.PI) / 180;
-  let deltaLambda = (deltaLon * Math.PI) / 180;
-  let R = 6371e3; // gives d in metres
-  let d =
-    Math.acos(
-      Math.sin(p1) * Math.sin(p2) +
-        Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
-    ) * R;
+  const p1 = (lat1 * Math.PI) / 180;
+  const p2 = (lat2 * Math.PI) / 180;
+  const deltaLambda = (deltaLon * Math.PI) / 180;
+  const R = 6371e3; // gives d in metres
+  const d = Math.acos(
+    Math.sin(p1) * Math.sin(p2)
+        + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda),
+  ) * R;
 
   // closer than the "nearby" distance?
   if (d < nearbyDistance) return true;

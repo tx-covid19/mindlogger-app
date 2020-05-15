@@ -27,17 +27,15 @@ class AppletDetails extends Component {
       inProgress,
       skin,
       hasInvites,
-      appletData,
       getAppletResponseData,
     } = this.props;
     if (!currentApplet) {
       return null;
     }
-    // console.log('applet data is', appletData[currentApplet.id.split('/')[1]] || {});
+
     return (
       <AppletDetailsComponent
         applet={currentApplet}
-        appletData={appletData}
         getAppletResponseData={getAppletResponseData}
         inProgress={inProgress}
         onPressDrawer={Actions.drawerOpen}
@@ -62,7 +60,6 @@ AppletDetails.propTypes = {
   skin: PropTypes.object.isRequired,
   startResponse: PropTypes.func.isRequired,
   hasInvites: PropTypes.bool.isRequired,
-  appletData: PropTypes.object.isRequired,
   getAppletResponseData: PropTypes.func.isRequired,
 };
 
@@ -71,8 +68,6 @@ const mapStateToProps = state => ({
   inProgress: inProgressSelector(state),
   skin: skinSelector(state),
   hasInvites: invitesSelector(state).length > 0,
-  appletData: currentAppletResponsesSelector(state),
-  // responsesSelector(state), // appletDataSelector(state) || {},
 });
 
 const mapDispatchToProps = {
