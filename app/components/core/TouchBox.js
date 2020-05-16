@@ -43,7 +43,15 @@ const styles = StyleSheet.create({
 
 // const TouchableOpacityEx = withPreventDoubleClick(TouchableOpacity);
 
-const TouchBox = ({ children, activity, onPress, getResponseInActivity, getResponseInApplet, isActivity, isApplet }) => {
+const TouchBox = ({
+  children,
+  activity,
+  onPress,
+  getResponseInActivity,
+  getResponseInApplet,
+  isActivity,
+  isApplet,
+}) => {
   const [touched, setTouched] = useState(false);
   const [appletTouched, setAppletTouched] = useState(false);
 
@@ -95,12 +103,16 @@ const TouchBox = ({ children, activity, onPress, getResponseInActivity, getRespo
 
 TouchBox.propTypes = {
   children: PropTypes.node.isRequired,
-  activity: PropTypes.object.isRequired,
+  activity: PropTypes.object,
   onPress: PropTypes.func.isRequired,
   getResponseInActivity: PropTypes.func.isRequired,
   getResponseInApplet: PropTypes.func.isRequired,
   isApplet: PropTypes.bool.isRequired,
   isActivity: PropTypes.bool.isRequired,
+};
+
+TouchBox.defaultProps = {
+  activity: null,
 };
 
 const mapStateToProps = state => ({

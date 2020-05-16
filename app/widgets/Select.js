@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, Container, ListItem, Left, Right, Icon } from 'native-base';
-import { Picker, Modal, StyleSheet, View } from 'react-native';
+import { Picker, StyleSheet, View } from 'react-native';
 import { colors } from '../theme';
 
 const styles = StyleSheet.create({

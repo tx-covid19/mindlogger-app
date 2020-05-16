@@ -23,7 +23,16 @@ import {
 import TimePicker from '../../widgets/TimeRange/TimePicker';
 import { currentAppletSelector } from '../../state/app/app.selectors';
 
-const Widget = ({ screen, answer, onChange, applet, isCurrent, onPress, onRelease, onContentError }) => {
+const Widget = ({
+  screen,
+  answer,
+  onChange,
+  applet,
+  isCurrent,
+  onPress,
+  onRelease,
+  onContentError,
+}) => {
   if (screen.inputType === 'radio'
     // && Array.isArray(answer)
     && R.path(['valueConstraints', 'multipleChoice'], screen) === true) {

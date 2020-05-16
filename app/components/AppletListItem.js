@@ -44,11 +44,11 @@ const AppletListItem = ({ applet, onPress }) => {
         <View style={styles.inner}>
           <AppletImage applet={applet} />
           <View style={styles.textBlock}>
-            <SubHeading style={{ fontFamily: theme.fontFamily }}>
+            <SubHeading>
               {applet.name.en}
             </SubHeading>
             {applet.description && (
-              <BodyText style={{ fontFamily: theme.fontFamily }}>
+              <BodyText>
                 {applet.description.en}
               </BodyText>
             )}

@@ -11,8 +11,6 @@ import AppletListComponent from './AppletListComponent';
 import { sync } from '../../state/app/app.thunks';
 import { setCurrentApplet, toggleMobileDataAllowed } from '../../state/app/app.actions';
 import { mobileDataAllowedSelector } from '../../state/app/app.selectors';
-import LocationServices from '../../services/LocationServices';
-
 import { statsSelector, zipcodeSelector, isFetchingStatsSelector } from '../../state/covid/covid.selectors';
 import { getCovidStats } from '../../state/covid/covid.thunks';
 import { clearCovidStats } from '../../state/covid/covid.actions';
@@ -84,8 +82,15 @@ AppletList.propTypes = {
   toggleMobileDataAllowed: PropTypes.func.isRequired,
   getCovidStats: PropTypes.func.isRequired,
   isFetchingStats: PropTypes.bool.isRequired,
-  stats: PropTypes.object.isRequired,
+  stats: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   zipcode: PropTypes.string.isRequired,
+};
+
+AppletList.defaultProps = {
+  stats: null,
 };
 
 const mapStateToProps = state => ({

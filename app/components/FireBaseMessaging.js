@@ -147,7 +147,6 @@ class FireBaseMessaging extends Component {
         // eslint-disable-next-line no-console
         console.warn(`FCM[${Platform.OS}]: error `, error);
       });
-
     });
   };
 

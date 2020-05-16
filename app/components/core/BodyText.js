@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, StyleSheet } from 'react-native';
 import { colors } from '../../theme';
+import theme from '../../themes/base-theme';
 
 const styles = StyleSheet.create({
   body: {
     fontWeight: 'normal',
+    fontFamily: theme.fontFamily,
     fontSize: 16,
     color: colors.tertiary,
   },

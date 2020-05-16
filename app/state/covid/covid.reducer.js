@@ -1,7 +1,7 @@
 import COVID_CONSTANTS from './covid.constants';
 
 export const initialState = {
-  stats: {},
+  stats: null,
   zipcode: '',
   isFetchingStats: false,
 };

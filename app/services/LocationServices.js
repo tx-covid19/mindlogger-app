@@ -52,11 +52,11 @@ export class LocationData {
     // Hours part from the timestamp
     const hours = date.getHours();
     // Minutes part from the timestamp
-    const minutes = "0" + date.getMinutes();
+    const minutes = `0${date.getMinutes()}`;
     // Seconds part from the timestamp
-    const seconds = "0" + date.getSeconds();
+    const seconds = `0${date.getSeconds()}`;
     // Will display time in 10:30:23 format
-    const formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    const formattedTime = `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`;
 
     return formattedTime;
   }
@@ -66,8 +66,8 @@ export class LocationData {
     const locationArray = this.getLocationData();
     console.log('[INFO] Found stored location data', locationArray.length);
     // Always work in UTC, not the local time in the locationData
-    let unixtimeUTC = Math.floor(location['time']);
-    let unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
+    const unixtimeUTC = Math.floor(location.time);
+    const unixtimeUTC_28daysAgo = unixtimeUTC - 60 * 60 * 24 * 1000 * 28;
 
     const formattedTime = this.getFormattedTime(unixtimeUTC);
 
@@ -75,7 +75,7 @@ export class LocationData {
     // This ensures that no matter how fast GPS coords are delivered, saving
     // does not happen any faster than the minLocationSaveInterval
     if (locationArray.length >= 1) {
-      const lastSaveTime = locationArray[locationArray.length - 1]['time'];
+      const lastSaveTime = locationArray[locationArray.length - 1].time;
       if (lastSaveTime + this.minLocationSaveInterval > unixtimeUTC) {
         console.log('[INFO] Discarding point (too soon):', unixtimeUTC);
         return;
@@ -85,7 +85,7 @@ export class LocationData {
     // Curate the list of points, only keep the last 28 days
     const curated = [];
     for (let i = 0; i < locationArray.length; i++) {
-      if (locationArray[i]['time'] > unixtimeUTC_28daysAgo) {
+      if (locationArray[i].time > unixtimeUTC_28daysAgo) {
         curated.push(locationArray[i]);
       }
     }
@@ -100,18 +100,18 @@ export class LocationData {
       const lastLocationArray = curated[curated.length - 1];
 
       const areCurrentPreviousNearby = areLocationsNearby(
-        lastLocationArray['latitude'],
-        lastLocationArray['longitude'],
-        location['latitude'],
-        location['longitude'],
+        lastLocationArray.latitude,
+        lastLocationArray.longitude,
+        location.latitude,
+        location.longitude,
       );
 
       // Actually do the backfill if the current point is nearby the previous
       // point and the time is within the maximum time to backfill.
-      const lastRecordedTime = lastLocationArray['time'];
+      const lastRecordedTime = lastLocationArray.time;
       if (
-        areCurrentPreviousNearby &&
-        unixtimeUTC - lastRecordedTime < this.maxBackfillTime
+        areCurrentPreviousNearby
+        && unixtimeUTC - lastRecordedTime < this.maxBackfillTime
       ) {
         for (
           let newTS = lastRecordedTime + this.locationInterval;
@@ -119,9 +119,9 @@ export class LocationData {
           newTS += this.locationInterval
         ) {
           const formattedBackfillTime = this.getFormattedTime(newTS);
-          let lat_lon_time = {
-            latitude: lastLocationArray['latitude'],
-            longitude: lastLocationArray['longitude'],
+          const lat_lon_time = {
+            latitude: lastLocationArray.latitude,
+            longitude: lastLocationArray.longitude,
             formattedTime: formattedBackfillTime,
             time: newTS,
           };
@@ -146,10 +146,10 @@ export class LocationData {
     // recorded GPS timestamp
     console.log('curated before push', curated);
     const lat_lon_time = {
-      latitude: location['latitude'],
-      longitude: location['longitude'],
+      latitude: location.latitude,
+      longitude: location.longitude,
       time: unixtimeUTC,
-      formattedTime: formattedTime,
+      formattedTime,
       distance: distanceTraveled,
     };
     curated.push(lat_lon_time);
@@ -338,7 +338,7 @@ export default class LocationServices {
       });
     });
 
-    BackgroundGeolocation.checkStatus(status => {
+    BackgroundGeolocation.checkStatus((status) => {
       console.log(
         '[INFO] BackgroundGeolocation service is running',
         status.isRunning,
@@ -348,7 +348,7 @@ export default class LocationServices {
         status.locationServicesEnabled,
       );
       console.log(
-        '[INFO] BackgroundGeolocation auth status: ' + status.authorization,
+        `[INFO] BackgroundGeolocation auth status: ${status.authorization}`,
       );
 
       BackgroundGeolocation.start(); // triggers start on start event

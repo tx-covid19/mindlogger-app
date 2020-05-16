@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import { View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { Text, Button, Input, Spinner } from 'native-base';
 import TouchBox from './core/TouchBox';
-import {
-  SubHeading,
-  BodyText,
-} from './core';
-import AppletImage from './AppletImage';
+import { BodyText } from './core';
 import theme from '../themes/variables';
 import { colors } from '../theme';
 
@@ -170,13 +166,13 @@ class CovidItem extends Component {
     const { country, state, county } = stats;
     return (
       <>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           US: {fmt(country.confirmed)} ({fmt(country.deaths)})
         </BodyText>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           {tempStateMapping[state.name] || 'State'}: {fmt(state.confirmed)} ({fmt(state.deaths)})
         </BodyText>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           {county.name || 'County'}: {fmt(county.confirmed)} ({fmt(county.deaths)})
         </BodyText>
       </>
@@ -197,7 +193,7 @@ class CovidItem extends Component {
           <View style={styles.inner}>
             <Image style={styles.image} source={icon} />
             <View style={styles.textBlock}>
-              { 
+              {
                 stats ? 
                 this.renderStats(stats) :
                 (
@@ -216,10 +212,10 @@ class CovidItem extends Component {
             <View style={styles.zipBlock}>
               { stats !== false && (loading || !editing) ? (
                 <TouchableOpacity onPress={this.handlePress}>
-                  <BodyText style={{ fontFamily: theme.fontFamily, textAlign: 'center', fontSize: 14, color: colors.grey }}>
+                  <BodyText style={{ textAlign: 'center', fontSize: 14, color: colors.grey }}>
                     Zip code
                   </BodyText>
-                  <BodyText style={{ fontFamily: theme.fontFamily, textAlign: 'center' }}>
+                  <BodyText style={{ textAlign: 'center' }}>
                     { zipcode || this.state.zipcode }
                   </BodyText>
                 </TouchableOpacity>
