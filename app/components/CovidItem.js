@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { Text, Button, Input, Spinner } from 'native-base';
-import * as R from 'ramda';
 import TouchBox from './core/TouchBox';
-import {
-  SubHeading,
-  BodyText,
-} from './core';
-import AppletImage from './AppletImage';
+import { BodyText } from './core';
 import theme from '../themes/variables';
 import { colors } from '../theme';
 
@@ -199,7 +194,7 @@ class CovidItem extends Component {
             <Image style={styles.image} source={icon} />
             <View style={styles.textBlock}>
               {
-                stats && !R.isEmpty(stats)? 
+                stats ? 
                 this.renderStats(stats) :
                 (
                   stats === false ?

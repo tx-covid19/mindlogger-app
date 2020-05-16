@@ -152,8 +152,15 @@ AppletListComponent.propTypes = {
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
   isFetchingStats: PropTypes.bool.isRequired,
-  stats: PropTypes.object.isRequired,
+  stats: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   zipcode: PropTypes.string.isRequired,
+};
+
+AppletListComponent.defaultProps = {
+  stats: null,
 };
 
 export default AppletListComponent;

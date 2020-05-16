@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 import { currentAppletSelector, skinSelector } from '../../state/app/app.selectors';
 import AppletDetailsComponent from './AppletDetailsComponent';
-import { inProgressSelector, currentAppletResponsesSelector } from '../../state/responses/responses.selectors';
+import { inProgressSelector } from '../../state/responses/responses.selectors';
 import { invitesSelector } from '../../state/applets/applets.selectors';
 import { getAppletResponseData } from '../../state/applets/applets.thunks';
 import { setCurrentActivity } from '../../state/app/app.actions';
