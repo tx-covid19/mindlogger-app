@@ -1,4 +1,4 @@
-app_identifier "org.ut-wcwh.hornsense" # The bundle identifier of your app
+app_identifier "org.utwcwh.hornsense" # The bundle identifier of your app
 apple_id "cameron.craddock@gmail.com" # Your Apple email address
 
 team_name "Cameron Craddock"

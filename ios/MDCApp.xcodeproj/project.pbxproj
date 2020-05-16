@@ -779,7 +779,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.ut-wcwh.hornsense";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.utwcwh.hornsense";
 				PRODUCT_NAME = MDCApp;
 				PROVISIONING_PROFILE_SPECIFIER = "Hornsense app store provisioning profile";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -805,7 +805,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.ut-wcwh.hornsense";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.utwcwh.hornsense";
 				PRODUCT_NAME = MDCApp;
 				PROVISIONING_PROFILE_SPECIFIER = "Hornsense app store provisioning profile";
 				VERSIONING_SYSTEM = "apple-generic";
