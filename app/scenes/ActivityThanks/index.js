@@ -38,7 +38,7 @@ const ActivityThanks = ({ getResponseInActivity }) => {
     >
       <View style={styles.box}>
         <Heading style={{ color: 'white', fontFamily: theme.fontFamily }}>Thanks!</Heading>
-        <BodyText style={{ color: 'white', fontFamily: theme.fontFamily }}>
+        <BodyText style={{ color: 'white' }}>
           We've saved your answers.
         </BodyText>
 

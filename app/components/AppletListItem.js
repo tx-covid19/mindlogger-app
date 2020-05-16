@@ -48,7 +48,7 @@ const AppletListItem = ({ applet, onPress }) => {
               {applet.name.en}
             </SubHeading>
             {applet.description && (
-              <BodyText style={{ fontFamily: theme.fontFamily }}>
+              <BodyText>
                 {applet.description.en}
               </BodyText>
             )}

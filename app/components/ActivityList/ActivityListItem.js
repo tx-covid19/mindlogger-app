@@ -72,7 +72,7 @@ const ActivityRow = ({ activity, onPress }) => {
               {activity.name.en}
             </SubHeading>
             {activity.description && (
-              <BodyText style={[(activity.status === 'scheduled' && !activity.nextAccess) ? { opacity: 0.5 } : { opacity: 1 }, { fontFamily: theme.fontFamily }]}>
+              <BodyText style={(activity.status === 'scheduled' && !activity.nextAccess) ? { opacity: 0.5 } : { opacity: 1, fontFamily: theme.fontFamily }}>
                 {activity.description.en}
               </BodyText>
             )}

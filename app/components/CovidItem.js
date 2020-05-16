@@ -171,13 +171,13 @@ class CovidItem extends Component {
     const { country, state, county } = stats;
     return (
       <>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           US: {fmt(country.confirmed)} ({fmt(country.deaths)})
         </BodyText>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           {tempStateMapping[state.name] || 'State'}: {fmt(state.confirmed)} ({fmt(state.deaths)})
         </BodyText>
-        <BodyText style={{ fontFamily: theme.fontFamily }}>
+        <BodyText>
           {county.name || 'County'}: {fmt(county.confirmed)} ({fmt(county.deaths)})
         </BodyText>
       </>
@@ -217,10 +217,10 @@ class CovidItem extends Component {
             <View style={styles.zipBlock}>
               { stats !== false && (loading || !editing) ? (
                 <TouchableOpacity onPress={this.handlePress}>
-                  <BodyText style={{ fontFamily: theme.fontFamily, textAlign: 'center', fontSize: 14, color: colors.grey }}>
+                  <BodyText style={{ textAlign: 'center', fontSize: 14, color: colors.grey }}>
                     Zip code
                   </BodyText>
-                  <BodyText style={{ fontFamily: theme.fontFamily, textAlign: 'center' }}>
+                  <BodyText style={{ textAlign: 'center' }}>
                     { zipcode || this.state.zipcode }
                   </BodyText>
                 </TouchableOpacity>
