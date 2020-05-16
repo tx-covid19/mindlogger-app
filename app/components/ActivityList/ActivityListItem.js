@@ -68,7 +68,7 @@ const ActivityRow = ({ activity, onPress }) => {
       <TouchBox activity={activity} onPress={() => onPress(activity)}>
         <View style={styles.layout}>
           <View style={styles.left}>
-            <SubHeading style={[(activity.status === 'scheduled' && !activity.nextAccess) ? { opacity: 0.5 } : { opacity: 1 }, { fontFamily: theme.fontFamily }]}>
+            <SubHeading style={(activity.status === 'scheduled' && !activity.nextAccess) ? { opacity: 0.5 } : { opacity: 1 }}>
               {activity.name.en}
             </SubHeading>
             {activity.description && (
