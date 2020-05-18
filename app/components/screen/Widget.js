@@ -8,6 +8,7 @@ import {
   AudioRecord,
   AudioStimulus,
   Camera,
+  TemperatureSlider,
   DatePicker,
   Drawing,
   Geolocation,
@@ -58,6 +59,18 @@ const Widget = ({
   if (screen.inputType === 'slider') {
     return (
       <Slider
+        config={screen.valueConstraints}
+        appletName={applet.name.en}
+        onChange={onChange}
+        onPress={onPress}
+        onRelease={onRelease}
+        value={answer}
+      />
+    );
+  }
+  if (screen.inputType === 'temperatureSlider') {
+    return (
+      <TemperatureSlider
         config={screen.valueConstraints}
         appletName={applet.name.en}
         onChange={onChange}
