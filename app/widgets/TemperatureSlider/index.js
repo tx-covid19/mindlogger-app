@@ -11,6 +11,8 @@ import SliderComponent from 'react-native-slider';
 import { getURL } from '../../services/helper';
 import { colors } from '../../themes/colors';
 
+const NUM_STEPS = 200;
+
 const testTicks = [
   { name: 'One', value: 1 },
   { name: 'Two', value: 2 },
@@ -27,7 +29,6 @@ const styles = StyleSheet.create({
   sliderWrapper: {
     width: '100%',
     justifyContent: 'center',
-    // transform: [{ rotate: '-90deg' }],
     paddingLeft: 35,
     paddingRight: 35,
   },
@@ -290,6 +291,23 @@ class TemperatureSlider extends Component {
     );
   };
 
+  getStepSize = (minimumValue, maximumValue) => {
+    return (maximumValue - minimumValue) / NUM_STEPS;
+  }
+
+  getRoundedLabel = (currentValue, minimumValue, maximumValue) => {
+    if (!currentValue) {
+      return currentValue;
+    }
+    const stepSize = this.getStepSize(minimumValue, maximumValue);
+    const numDigits = Math.ceil(
+      Math.abs(
+        Math.log10(stepSize),
+      ),
+    );
+    return currentValue.toFixed(numDigits);
+  }
+
   renderTicks() {
     const { sliderWidth } = this.state;
     const tickWidth = sliderWidth / testTicks.length;
@@ -326,15 +344,19 @@ class TemperatureSlider extends Component {
     if (currentVal === minimumValue - 1) {
       currentVal = minimumValue;
     }
-    const left = this.calculateLabelPosition();
 
+    const left = this.calculateLabelPosition();
+    const stepSize = this.getStepSize(minimumValue, maximumValue);
+    const roundedLabel = this.getRoundedLabel(currentValue, minimumValue, maximumValue);
 
     return (
       <View style={styles.container}>
         <View style={styles.sliderWrapper}>
           {!!currentValue && (
             <View style={[styles.knobLabel, { left }]}>
-              <Text style={styles.knobLabelText}>{currentValue} F</Text>
+              <Text style={styles.knobLabelText}>
+                {roundedLabel} F
+              </Text>
             </View>
           )}
           {tickMarks.map(tickMark => (
@@ -345,8 +367,7 @@ class TemperatureSlider extends Component {
           <TouchableWithoutFeedback onPressIn={this.tapSliderHandler}>
             <View ref={this.sliderRef} onLayout={this.measureSliderWidth}>
               <SliderComponent
-                value={currentVal >= minimumValue
-                  ? currentVal : (minimumValue + maximumValue) / 2}
+                value={currentVal}
                 onValueChange={value => this.handleValue(value)}
                 minimumValue={minimumValue}
                 maximumValue={maximumValue}
@@ -354,7 +375,7 @@ class TemperatureSlider extends Component {
                 maximumTrackTintColor="#CCC"
                 trackStyle={styles.track}
                 thumbStyle={currentVal >= minimumValue ? styles.thumb : styles.thumbUnselected}
-                step={(minimumValue - maximumValue) / 200}
+                step={stepSize}
                 onSlidingStart={onPress}
                 onSlidingComplete={(val) => {
                   onRelease();
