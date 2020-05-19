@@ -341,8 +341,10 @@ class TemperatureSlider extends Component {
       this.setState({ currentValue: value });
     }
 
-    if (currentVal === minimumValue - 1) {
+    if (currentVal < minimumValue) {
       currentVal = minimumValue;
+    } else if (currentVal > maximumValue) {
+      currentVal = maximumValue;
     }
 
     const left = this.calculateLabelPosition();
