@@ -300,6 +300,9 @@ class TemperatureSlider extends Component {
       return currentValue;
     }
     const stepSize = this.getStepSize(minimumValue, maximumValue);
+    if (stepSize >= 1) {
+      return currentValue.toFixed(0);
+    }
     const numDigits = Math.ceil(
       Math.abs(
         Math.log10(stepSize),
