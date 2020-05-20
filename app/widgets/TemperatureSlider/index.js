@@ -13,14 +13,6 @@ import { colors } from '../../themes/colors';
 
 const NUM_STEPS = 200;
 
-const testTicks = [
-  { name: 'One', value: 1 },
-  { name: 'Two', value: 2 },
-  { name: 'Three', value: 3 },
-  { name: 'Four', value: 4 },
-  { name: 'Five', value: 5 },
-];
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -235,40 +227,6 @@ class TemperatureSlider extends Component {
     }
   }
 
-  getTickPosition = (value) => {
-    const { sliderWidth } = this.state;
-    const minValue = 1;
-    const maxValue = testTicks.length;
-
-    if (value === minValue) {
-      return {
-        left: 0,
-      };
-    }
-    if (value === maxValue) {
-      return {
-        left: sliderWidth - 5,
-      };
-    }
-    return {
-      left: sliderWidth * (value - minValue) / (maxValue - minValue),
-    };
-  };
-
-  renderTick = (tick, tickWidth) => {
-    const tickStyle = [
-      styles.tick,
-      {
-        width: tickWidth - 20,
-        transform: [{ translateX: -tickWidth / 2 }],
-      },
-      this.getTickPosition(tick.value, tickWidth),
-    ];
-    return (
-      <Text style={tickStyle} key={tick.value}>{tick.name}</Text>
-    );
-  };
-
   calculateLabelPosition = () => {
     const {
       minimumValue,
@@ -309,18 +267,6 @@ class TemperatureSlider extends Component {
       ),
     );
     return currentValue.toFixed(numDigits);
-  }
-
-  renderTicks() {
-    const { sliderWidth } = this.state;
-    const tickWidth = sliderWidth / testTicks.length;
-    return (
-      <View style={styles.ticks}>
-        {
-          testTicks.map(tick => this.renderTick(tick, tickWidth))
-        }
-      </View>
-    );
   }
 
   render() {
