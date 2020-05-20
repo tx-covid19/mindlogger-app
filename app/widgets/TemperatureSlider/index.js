@@ -11,13 +11,7 @@ import SliderComponent from 'react-native-slider';
 import { getURL } from '../../services/helper';
 import { colors } from '../../themes/colors';
 
-const testTicks = [
-  { name: 'One', value: 1 },
-  { name: 'Two', value: 2 },
-  { name: 'Three', value: 3 },
-  { name: 'Four', value: 4 },
-  { name: 'Five', value: 5 },
-];
+const NUM_STEPS = 200;
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +21,6 @@ const styles = StyleSheet.create({
   sliderWrapper: {
     width: '100%',
     justifyContent: 'center',
-    // transform: [{ rotate: '-90deg' }],
     paddingLeft: 35,
     paddingRight: 35,
   },
@@ -116,7 +109,7 @@ const styles = StyleSheet.create({
   },
   tickMark: {
     position: 'absolute',
-    bottom: -33,
+    bottom: -12,
   },
   knobLabel: {
     position: 'absolute',
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
     minWidth: 50,
   },
   knobLabelText: {
-    fontSize: 10,
+    fontSize: 14,
     textAlign: 'center',
   },
   ticks: {
@@ -135,17 +128,17 @@ const styles = StyleSheet.create({
   },
   tick: {
     position: 'absolute',
-    fontSize: 12,
+    fontSize: 14,
     textAlign: 'center',
   },
   tickLabel: {
     paddingLeft: 5,
-    fontSize: 12,
+    fontSize: 14,
     color: '#a0a0a0',
   },
 });
 
-class Slider extends Component {
+class TemperatureSlider extends Component {
   sliderRef = React.createRef();
 
   static propTypes = {
@@ -161,7 +154,7 @@ class Slider extends Component {
   };
 
   static defaultProps = {
-    value: undefined,
+    value: 100,
     onPress: () => {},
     onRelease: () => {},
   };
@@ -188,7 +181,6 @@ class Slider extends Component {
         return item.value;
       }),
     );
-
     this.setState({ minimumValue: minValue, maximumValue: maxValue });
   }
 
@@ -235,73 +227,55 @@ class Slider extends Component {
     }
   }
 
-  tapSliderHandler = (evt) => {
-    const { sliderWidth, minimumValue } = this.state;
+  calculateLabelPosition = () => {
     const {
-      onChange,
-      config: { itemList },
-    } = this.props;
+      minimumValue,
+      currentValue,
+      maximumValue,
+      sliderWidth,
+    } = this.state;
 
-    if (sliderWidth) {
-      const calculatedValue = Math.ceil(
-        Math.abs(evt.nativeEvent.locationX / sliderWidth).toFixed(1)
-          * itemList.length
-          + minimumValue
-          - 1,
-      );
-      onChange(calculatedValue);
-      this.setState({ currentValue: calculatedValue });
+    if (currentValue === minimumValue) {
+      return 20;
     }
-  };
-
-  getTickPosition = (value) => {
-    const { sliderWidth } = this.state;
-    const minValue = 1;
-    const maxValue = testTicks.length;
-
-    if (value === minValue) {
-      return {
-        left: 0,
-      };
+    if (currentValue === maximumValue) {
+      return sliderWidth;
     }
-    if (value === maxValue) {
-      return {
-        left: sliderWidth - 5,
-      };
-    }
-    return {
-      left: sliderWidth * (value - minValue) / (maxValue - minValue),
-    };
-  };
 
-  renderTick = (tick, tickWidth) => {
-    const tickStyle = [
-      styles.tick,
-      {
-        width: tickWidth - 20,
-        transform: [{ translateX: -tickWidth / 2 }],
-      },
-      this.getTickPosition(tick.value, tickWidth),
-    ];
     return (
-      <Text style={tickStyle} key={tick.value}>{tick.name}</Text>
+      (sliderWidth * (currentValue - minimumValue))
+        / (maximumValue - minimumValue)
+      + 20 / (currentValue - minimumValue)
     );
   };
 
-  renderTicks() {
-    const { sliderWidth } = this.state;
-    const tickWidth = sliderWidth / testTicks.length;
-    return (
-      <View style={styles.ticks}>
-        {
-          testTicks.map(tick => this.renderTick(tick, tickWidth))
-        }
-      </View>
+  getStepSize = (minimumValue, maximumValue) => {
+    return (maximumValue - minimumValue) / NUM_STEPS;
+  }
+
+  getRoundedLabel = (currentValue, minimumValue, maximumValue) => {
+    if (!currentValue) {
+      return currentValue;
+    }
+    const stepSize = this.getStepSize(minimumValue, maximumValue);
+    if (stepSize >= 1) {
+      return currentValue.toFixed(0);
+    }
+    const numDigits = Math.ceil(
+      Math.abs(
+        Math.log10(stepSize),
+      ),
     );
+    return currentValue.toFixed(numDigits);
   }
 
   render() {
-    const { currentValue, minimumValue, maximumValue, tickMarks } = this.state;
+    const {
+      currentValue,
+      minimumValue,
+      maximumValue,
+      tickMarks,
+    } = this.state;
 
     const {
       config: { maxValue, minValue, itemList },
@@ -318,22 +292,33 @@ class Slider extends Component {
 
     if (currentVal < minimumValue) {
       currentVal = minimumValue;
+    } else if (currentVal > maximumValue) {
+      currentVal = maximumValue;
     }
+
+    const left = this.calculateLabelPosition();
+    const stepSize = this.getStepSize(minimumValue, maximumValue);
+    const roundedLabel = this.getRoundedLabel(currentValue, minimumValue, maximumValue);
 
     return (
       <View style={styles.container}>
         <View style={styles.sliderWrapper}>
+          {!!currentValue && (
+            <View style={[styles.knobLabel, { left }]}>
+              <Text style={styles.knobLabelText}>
+                {roundedLabel} F
+              </Text>
+            </View>
+          )}
           {tickMarks.map(tickMark => (
             <View key={tickMark.value} style={[styles.tickMark, { left: tickMark.left }]}>
-              <Text style={styles.tickLabel}> l </Text>
-              <Text> { tickMark.value } </Text>
+              <Text style={styles.tickLabel}> | </Text>
             </View>
           ))}
           <TouchableWithoutFeedback onPressIn={this.tapSliderHandler}>
             <View ref={this.sliderRef} onLayout={this.measureSliderWidth}>
               <SliderComponent
-                value={currentVal >= minimumValue
-                  ? currentVal : (minimumValue + maximumValue) / 2}
+                value={currentVal}
                 onValueChange={value => this.handleValue(value)}
                 minimumValue={minimumValue}
                 maximumValue={maximumValue}
@@ -341,7 +326,7 @@ class Slider extends Component {
                 maximumTrackTintColor="#CCC"
                 trackStyle={styles.track}
                 thumbStyle={currentVal >= minimumValue ? styles.thumb : styles.thumbUnselected}
-                step={itemList ? 1 : 0}
+                step={stepSize}
                 onSlidingStart={onPress}
                 onSlidingComplete={(val) => {
                   onRelease();
@@ -381,4 +366,4 @@ class Slider extends Component {
   }
 }
 
-export { Slider };
+export { TemperatureSlider };
