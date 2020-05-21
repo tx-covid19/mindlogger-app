@@ -1,4 +1,4 @@
-package org.utwcwh.hornsense;
+package lab.covidut.data;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
