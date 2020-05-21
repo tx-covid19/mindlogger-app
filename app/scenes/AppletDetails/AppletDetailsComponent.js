@@ -89,6 +89,7 @@ class AppletDetailsComponent extends React.Component {
           <Body>
             <Title>{applet.name.en}</Title>
           </Body>
+          <Right />
         </Header>
         <Content>
           {this.renderProtocols()}
