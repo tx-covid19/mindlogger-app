@@ -41,7 +41,6 @@ class AppletDetails extends Component {
         onPressDrawer={Actions.drawerOpen}
         onPressActivity={this.handlePressActivity}
         onPressBack={this.handleBack}
-        onPressSettings={() => Actions.push('applet_settings')}
         primaryColor={skin.colors.primary}
         hasInvites={hasInvites}
       />

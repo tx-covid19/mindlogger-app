@@ -23,7 +23,6 @@ import Splash from './Splash';
 import VolumeInfo from './VolumeInfo';
 // import { colors } from '../themes/colors';
 import AppletInviteFlow from './AppletInviteFlow';
-import AppletSettings from './AppletSettings';
 
 const theme = getTheme(platform);
 theme['NativeBase.Footer'].height = 80;
@@ -49,7 +48,6 @@ const Navigator = Actions.create(
           <Scene key="settings" component={Settings} />
           <Scene key="report_test" component={ReportTest} />
           <Scene key="change_password" component={ChangePassword} />
-          <Scene key="applet_settings" component={AppletSettings} />
         </Scene>
         {/* </Drawer> */}
       </Scene>
