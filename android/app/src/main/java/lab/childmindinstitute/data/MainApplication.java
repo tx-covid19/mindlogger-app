@@ -1,4 +1,4 @@
-package lab.covidut.data;
+package org.utwcwh.hornsense;
 
 import android.app.Application;
 import android.content.Context;
