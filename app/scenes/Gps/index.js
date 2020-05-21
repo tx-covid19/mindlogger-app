@@ -67,10 +67,9 @@ class GpsData extends Component {
             return;
           default:
             console.log('default');
-            return;
         }
-      }).catch(error => {
-        console.log('error checking location: ' + error);
+      }).catch((error) => {
+        console.log(`error checking location: ${error}`);
       });
   }
 

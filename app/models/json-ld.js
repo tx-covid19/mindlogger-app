@@ -1,7 +1,8 @@
 import * as R from 'ramda';
 
-const ALLOW = 'reprolib:terms/allow';
 const ABOUT = 'http://schema.org/about';
+const ADD_PROPERTIES = 'reprolib:terms/addProperties';
+const ALLOW = 'reprolib:terms/allow';
 const ALT_LABEL = 'http://www.w3.org/2004/02/skos/core#altLabel';
 const AUDIO_OBJECT = 'http://schema.org/AudioObject';
 const AUTO_ADVANCE = 'reprolib:terms/auto_advance';
@@ -19,6 +20,7 @@ const INPUTS = 'reprolib:terms/inputs';
 const IS_ABOUT = 'reprolib:terms/isAbout';
 const ITEM_LIST_ELEMENT = 'http://schema.org/itemListElement';
 const MAX_VALUE = 'http://schema.org/maxValue';
+const STEP_VALUE = 'http://schema.org/stepValue';
 const MEDIA = 'reprolib:terms/media';
 const MIN_VALUE = 'http://schema.org/minValue';
 const MULTIPLE_CHOICE = 'reprolib:terms/multipleChoice';
@@ -78,6 +80,9 @@ export const flattenValueConstraints = vcObj => Object.keys(vcObj).reduce((accum
   }
   if (key === MIN_VALUE) {
     return { ...accumulator, minValue: R.path([key, 0, '@value'], vcObj) };
+  }
+  if (key === STEP_VALUE) {
+    return { ...accumulator, stepValue: R.path([key, 0, '@value'], vcObj) };
   }
   if (key === MULTIPLE_CHOICE) {
     return { ...accumulator, multipleChoice: R.path([key, 0, '@value'], vcObj) };
@@ -226,9 +231,21 @@ export const activityTransformJson = (activityJson, itemsJson) => {
   const notification = {}; // TO DO
   const info = languageListToObject(activityJson.info); // TO DO
 
-  const isVariableMapExpanded = R.hasPath([VARIABLE_MAP, 0, '@list'], activityJson);
-  const variableMapPath = isVariableMapExpanded ? [VARIABLE_MAP, 0, '@list'] : [VARIABLE_MAP];
-  const variableMapAr = R.pathOr([], variableMapPath, activityJson);
+  const variableMapAr = (() => {
+    if (R.hasPath([VARIABLE_MAP, 0, '@list'], activityJson)) {
+      return R.path([VARIABLE_MAP, 0, '@list'], activityJson);
+    }
+    if (R.hasPath([VARIABLE_MAP], activityJson)) {
+      return R.path([VARIABLE_MAP], activityJson);
+    }
+    if (R.hasPath([ADD_PROPERTIES, 0, '@list'], activityJson)) {
+      return R.path([ADD_PROPERTIES, 0, '@list'], activityJson);
+    }
+    if (R.hasPath([ADD_PROPERTIES], activityJson)) {
+      return R.path([ADD_PROPERTIES], activityJson);
+    }
+    return [];
+  })();
 
   const variableMap = transformVariableMap(variableMapAr);
   const visibility = listToObject(activityJson[VISIBILITY]);

@@ -1,10 +1,4 @@
-# MindLogger 0.11.32
-
-_Note: v0.1 is deprecated as of June 12, 2019._
-
-This mobile app (Android ≥ 5.0 "Lollipop" and iOS ≥ 10.0 "Whitetail") is intended to build apps for collecting data.
-
-[![Bitrise Build Status](https://app.bitrise.io/app/cd8e019aed55b142.svg?token=wFJ6Vq6YzRq4Od8HvEbwug)](https://app.bitrise.io/app/cd8e019aed55b142)
+# Hornsense 0.0.1
 
 ## Getting Started
 
@@ -12,21 +6,19 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Widget development
 
-[See the widget development guide](https://github.com/ChildMindInstitute/mindlogger-app/blob/master/widget-development.md)
+[See the widget development guide](https://github.com/tx-covid19/mindlogger-app/blob/master/widget-development.md)
 
 ### Prerequisites
 
-You need to have your own Girder instance running or leave your `defaultApiHost` set to `'https://api.mindlogger.org/api/v1'` in [`app/config.js`](https://github.com/ChildMindInstitute/mindlogger-app/blob/master/app/config.js#L2).
-
-You need [Node ≤10.11.0, npm ≥4.3.0 & ≤6.4.1](https://github.com/creationix/nvm#user-content-usage), [yarn ≥1.3.2](https://yarnpkg.com) and [React Native ≥0.49.3](https://facebook.github.io/react-native/) to be installed.
+You need [Node, npm](https://github.com/creationix/nvm#user-content-usage), [yarn](https://yarnpkg.com) and [React Native](https://facebook.github.io/react-native/) to be installed.
 For example
 ```
 npm -v
-4.3.0
+6.14.0
 yarn -v
-1.3.2
+1.13.0
 react-native -v
-react-native: 0.49.3
+react-native: 0.61.5
 ```
 You also need to have [Xcode](https://developer.apple.com/xcode/) and [Android Studio](https://developer.android.com/studio/) to be installed.
 
@@ -114,17 +106,9 @@ See [:link: CONTRIBUTING](./CONTRIBUTING.md).
 
 See [:link: CONTRIBUTING#Versioning](./CONTRIBUTING.md#Versioning).
 
-## Deployment
-
-See [:link: CONTRIBUTING#Deployment](./CONTRIBUTING.md#Deployment).
-
 ## Authors
 
-* [Child Mind Institute **MATTER Lab**](https://matter.childmind.org/mindlogger)
-* [**Stuart Freen**](https://github.com/stufreen) - *Rangle.io developer: code refactoring, pilot version*
-* [**Erik Ilyin**](https://github.com/erik-ilyin) - *Independent developer: initial prototype*
-
-See also the list of [contributors](https://github.com/ChildMindInstitute/ab2cd-app/contributors) who participated in this project.
+See the list of [contributors](https://github.com/tx-covid19/mindlogger-app/contributors) who participated in this project.
 
 ## License
 

@@ -93,13 +93,14 @@ class Login extends Component {
 Login.propTypes = {
   signInSuccessful: PropTypes.func.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,
-  skin: PropTypes.object.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   fcmToken: PropTypes.string,
 };
+
 Login.defaultProps = {
   fcmToken: null,
 };
+
 const mapStateToProps = state => ({
   mobileDataAllowed: mobileDataAllowedSelector(state),
   fcmToken: fcmFcmTokenSelector(state),
