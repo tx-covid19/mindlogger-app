@@ -127,7 +127,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "lab.covidut.data"
+        applicationId "org.utwcwh.hornsense"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
