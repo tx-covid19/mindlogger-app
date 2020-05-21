@@ -5,6 +5,8 @@
     "scripts": {
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "server": "node node_modules/.bin/react-native start",
+        "clean": "react-native-clean-project",
+        "ios-clean-simulator": "xcrun simctl list | awk -F '[()]' '{ for (i=2; i<NF; i+=2) print $i }' | grep '^[-A-Z0-9]*$' | xargs -I uuid xcrun simctl erase uuid",
         "ios": "./node_modules/.bin/react-native run-ios",
         "android": "./node_modules/.bin/react-native run-android",
         "lint": "eslint App.js app/**",
@@ -96,6 +98,7 @@
         "jetifier": "^1.6.5",
         "metro-react-native-babel-preset": "^0.58.0",
         "react-devtools": "^3.6.3",
+        "react-native-clean-project": "^3.3.0",
         "react-test-renderer": "16.9.0",
         "schedule": "0.4.0"
     },
