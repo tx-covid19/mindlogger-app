@@ -61,7 +61,8 @@ const AppletListComponent = ({
   onPressReportTest,
   onPressRefresh,
   onPressApplet,
-  onChangeZipcode,
+  onPressCovid,
+  onChangeCovidZipcode,
   mobileDataAllowed,
   toggleMobileDataAllowed,
 }) => {
@@ -127,7 +128,8 @@ const AppletListComponent = ({
                 stats={stats}
                 zipcode={zipcode}
                 loading={isFetchingStats}
-                onChangeZipcode={onChangeZipcode}
+                onChangeZipcode={onChangeCovidZipcode}
+                onPress={onPressCovid}
               />
             </ScrollView>
           </SafeAreaView>
@@ -147,7 +149,8 @@ AppletListComponent.propTypes = {
   onPressReportTest: PropTypes.func.isRequired,
   onPressRefresh: PropTypes.func.isRequired,
   onPressApplet: PropTypes.func.isRequired,
-  onChangeZipcode: PropTypes.func.isRequired,
+  onPressCovid: PropTypes.func.isRequired,
+  onChangeCovidZipcode: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   mobileDataAllowed: PropTypes.bool.isRequired,
   toggleMobileDataAllowed: PropTypes.func.isRequired,

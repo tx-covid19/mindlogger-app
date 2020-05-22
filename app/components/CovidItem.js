@@ -6,60 +6,7 @@ import TouchBox from './core/TouchBox';
 import { BodyText } from './core';
 import theme from '../themes/variables';
 import { colors } from '../theme';
-
-// TODO return state acronym on endpoint
-const tempStateMapping = {
-  'Alabama': 'AL',
-  'Alaska': 'AK',
-  'Arizona': 'AZ',
-  'Arkansas': 'AR',
-  'California': 'CA',
-  'Colorado': 'CO',
-  'Connecticut': 'CT',
-  'Delaware': 'DE',
-  'Florida': 'FL',
-  'Georgia': 'GA',
-  'Hawaii': 'HI',
-  'Idaho': 'ID',
-  'Illinois': 'IL',
-  'Indiana': 'IN',
-  'Iowa': 'IA',
-  'Kansas': 'KS',
-  'Kentucky': 'KY',
-  'Louisiana': 'LA',
-  'Maine': 'ME',
-  'Maryland': 'MD',
-  'Massachusetts': 'MA',
-  'Michigan': 'MI',
-  'Minnesota': 'MN',
-  'Mississippi': 'MS',
-  'Missouri': 'MO',
-  'Montana': 'MT',
-  'Nebraska': 'NE',
-  'Nevada': 'NV',
-  'New Hampshire': 'NH',
-  'New Jersey': 'NJ',
-  'New Mexico': 'NM',
-  'New York': 'NY',
-  'North Carolina': 'NC',
-  'North Dakota': 'ND',
-  'Ohio': 'OH',
-  'Oklahoma': 'OK',
-  'Oregon': 'OR',
-  'Pennsylvania': 'PA',
-  'Rhode Island': 'RI',
-  'South Carolina': 'SC',
-  'South Dakota': 'SD',
-  'Tennessee': 'TN',
-  'Texas': 'TX',
-  'Utah': 'UT',
-  'Vermont': 'VT',
-  'Virginia': 'VA',
-  'Washington': 'WA',
-  'West Virginia': 'WV',
-  'Wisconsin': 'WI',
-  'Wyoming': 'WY',
-}
+import { formatTime } from '../services/time';
 
 const icon = require('../../img/covid.png');
 
@@ -74,13 +21,21 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily,
     overflow: 'hidden',
   },
+  imageBlock: {
+    textAlign: 'center',
+    display: 'flex',
+    flexShrink: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
   image: {
     height: 64,
     width: 64,
     resizeMode: 'contain',
   },
   textBlock: {
-    flex: 1,
+    display: 'flex',
     flexGrow: 1,
     marginLeft: 16,
     fontFamily: theme.fontFamily,
@@ -89,6 +44,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily,
     textAlign: 'center',
     display: 'flex',
+    flexShrink: 1,
     alignContent: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -167,13 +123,16 @@ class CovidItem extends Component {
     return (
       <>
         <BodyText>
-          US: {fmt(country.confirmed)} ({fmt(country.deaths)})
+          {country.abbr || country.name || 'Country'}: {fmt(country.confirmed)} ({fmt(country.deaths)})
         </BodyText>
         <BodyText>
-          {tempStateMapping[state.name] || 'State'}: {fmt(state.confirmed)} ({fmt(state.deaths)})
+          {state.abbr || state.name || 'State'}: {fmt(state.confirmed)} ({fmt(state.deaths)})
         </BodyText>
         <BodyText>
           {county.name || 'County'}: {fmt(county.confirmed)} ({fmt(county.deaths)})
+        </BodyText>
+        <BodyText style={{fontSize: 12, color: colors.grey }}>
+          Last updated: {formatTime(stats.latest_update)}
         </BodyText>
       </>
     );
@@ -184,14 +143,16 @@ class CovidItem extends Component {
   }
 
   render() {
-    const { stats, zipcode, loading } = this.props;
+    const { stats, zipcode, loading, onPress } = this.props;
     const { editing } = this.state;
 
     return (
       <View style={styles.box}>
-        <TouchBox onPress={() => {}}>
+        <TouchBox onPress={onPress}>
           <View style={styles.inner}>
-            <Image style={styles.image} source={icon} />
+            <View style={styles.imageBlock}>
+              <Image style={styles.image} source={icon} />
+            </View>
             <View style={styles.textBlock}>
               {
                 stats ? 

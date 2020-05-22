@@ -35,7 +35,11 @@ class AppletList extends Component {
     Actions.push('applet_details');
   }
 
-  handleChangeZipcode = async (zipcode) => {
+  handlePressCovid = () => {
+    Actions.push('covid_details');
+  }
+
+  handleChangeCovidZipcode = async (zipcode) => {
     this.props.getCovidStats(zipcode);
   }
 
@@ -64,7 +68,8 @@ class AppletList extends Component {
         onPressReportTest={() => Actions.push('report_test')}
         onPressRefresh={this.refresh}
         onPressApplet={this.handlePressApplet}
-        onChangeZipcode={this.handleChangeZipcode}
+        onPressCovid={this.handlePressCovid}
+        onChangeCovidZipcode={this.handleChangeCovidZipcode}
         mobileDataAllowed={mobileDataAllowed}
         toggleMobileDataAllowed={toggleMobileDataAllowed}
       />
