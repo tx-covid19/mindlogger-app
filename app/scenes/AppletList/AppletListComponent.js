@@ -3,7 +3,7 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  ImageBackground,
+  Image,
   RefreshControl,
   StatusBar,
   SafeAreaView,
@@ -23,17 +23,17 @@ import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.secondary,
+    backgroundColor: '#000',
+  },
+  background: {
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
   },
   activityList: {
-    // flex: 1,
-    // backgroundColor: colors.lightGrey,
   },
   activityListContainer: {
-    // backgroundColor: colors.secondary,
-    // flex: 1,
     paddingTop: 10,
-    // paddingBottom: 30,
   },
   sync: {
     padding: 50,
@@ -72,67 +72,62 @@ const AppletListComponent = ({
     <Provider>
       <Container style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <ImageBackground
-          style={{ width: '100%', height: '100%', flex: 1 }}
-          source={backgroundImage}
-        >
-          <SafeAreaView>
-            <Header>
-              <Left />
-              <Body>
-                <Title>{title}</Title>
-              </Body>
-              <Right style={{ flexDirection: 'row' }}>
-                <View>
-                  <Menu
-                    visible={visible}
-                    onDismiss={() => setVisible(!visible)}
-                    anchor={(
-                      <Button transparent onPress={() => setVisible(!visible)}>
-                        <Icon type="FontAwesome" name="ellipsis-v" />
-                      </Button>
-                    )}
-                  >
-                    <Menu.Item onPress={onPressReportTest} title="Scan QR" />
-                    <Menu.Item onPress={onPressDrawer} title="Settings" />
-                  </Menu>
-                </View>
-              </Right>
-            </Header>
-            <ScrollView
-              style={styles.activityList}
-              refreshControl={(
-                <RefreshControl
-                  refreshing={isDownloadingApplets}
-                  onRefresh={() => {
-                    if (!netInfo.isConnected) {
-                      connectionAlert();
-                    } else if (netInfo.type === 'cellular' && !mobileDataAllowed) {
-                      mobileDataAlert(toggleMobileDataAllowed);
-                    } else {
-                      onPressRefresh();
-                    }
-                  }}
-                />
-              )}
-              contentContainerStyle={styles.activityListContainer}
-            >
-
-              {applets.map(applet => (
-                <AppletListItem applet={applet} onPress={onPressApplet} key={applet.id} />
-              ))}
-              {invites.length ? <AppletInvite /> : null}
-
-              <CovidItem
-                stats={stats}
-                zipcode={zipcode}
-                loading={isFetchingStats}
-                onChangeZipcode={onChangeZipcode}
+        <Image resizeMode="contain" source={backgroundImage}  style={styles.background} />
+        <SafeAreaView>
+          <Header>
+            <Left />
+            <Body>
+              <Title>{title}</Title>
+            </Body>
+            <Right style={{ flexDirection: 'row' }}>
+              <View>
+                <Menu
+                  visible={visible}
+                  onDismiss={() => setVisible(!visible)}
+                  anchor={(
+                    <Button transparent onPress={() => setVisible(!visible)}>
+                      <Icon type="FontAwesome" name="ellipsis-v" />
+                    </Button>
+                  )}
+                >
+                  <Menu.Item onPress={onPressReportTest} title="Scan QR" />
+                  <Menu.Item onPress={onPressDrawer} title="Settings" />
+                </Menu>
+              </View>
+            </Right>
+          </Header>
+          <ScrollView
+            style={styles.activityList}
+            refreshControl={(
+              <RefreshControl
+                refreshing={isDownloadingApplets}
+                onRefresh={() => {
+                  if (!netInfo.isConnected) {
+                    connectionAlert();
+                  } else if (netInfo.type === 'cellular' && !mobileDataAllowed) {
+                    mobileDataAlert(toggleMobileDataAllowed);
+                  } else {
+                    onPressRefresh();
+                  }
+                }}
               />
-            </ScrollView>
-          </SafeAreaView>
-        </ImageBackground>
+            )}
+            contentContainerStyle={styles.activityListContainer}
+          >
 
+            {applets.map(applet => (
+              <AppletListItem applet={applet} onPress={onPressApplet} key={applet.id} />
+            ))}
+            {invites.length ? <AppletInvite /> : null}
+
+            <CovidItem
+              stats={stats}
+              zipcode={zipcode}
+              loading={isFetchingStats}
+              onChangeZipcode={onChangeZipcode}
+            />
+          </ScrollView>
+        </SafeAreaView>
       </Container>
     </Provider>
 
