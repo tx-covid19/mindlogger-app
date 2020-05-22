@@ -70,7 +70,6 @@ class AppletDetailsComponent extends React.Component {
   render() {
     const {
       applet,
-      onPressSettings,
       hasInvites,
       primaryColor,
     } = this.props;
@@ -90,11 +89,7 @@ class AppletDetailsComponent extends React.Component {
           <Body>
             <Title>{applet.name.en}</Title>
           </Body>
-          <Right style={{ flexDirection: 'row' }}>
-            <Button transparent onPress={onPressSettings}>
-              <Icon type="FontAwesome" name="gear" />
-            </Button>
-          </Right>
+          <Right />
         </Header>
         <Content>
           {this.renderProtocols()}
@@ -108,7 +103,6 @@ AppletDetailsComponent.propTypes = {
   applet: PropTypes.object.isRequired,
   onPressActivity: PropTypes.func.isRequired,
   onPressBack: PropTypes.func.isRequired,
-  onPressSettings: PropTypes.func.isRequired,
   primaryColor: PropTypes.string.isRequired,
   hasInvites: PropTypes.bool.isRequired,
   getResponseInApplet: PropTypes.func.isRequired,
