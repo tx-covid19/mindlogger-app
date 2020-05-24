@@ -7,6 +7,7 @@ import {
   RefreshControl,
   StatusBar,
   SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container, Header, Title, Button, Icon, Body, Right, Left } from 'native-base';
@@ -21,14 +22,17 @@ import CovidItem from '../../components/CovidItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
 
+const window = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000',
   },
   background: {
     position: 'absolute',
-    width: '100%',
     bottom: 0,
+    width: window.width,
+    height: window.width,
   },
   activityList: {
   },
@@ -72,7 +76,7 @@ const AppletListComponent = ({
     <Provider>
       <Container style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <Image resizeMode="contain" source={backgroundImage}  style={styles.background} />
+        <Image resizeMode="contain" source={backgroundImage} style={styles.background} />
         <SafeAreaView>
           <Header>
             <Left />
