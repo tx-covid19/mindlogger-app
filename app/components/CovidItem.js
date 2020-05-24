@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fontFamily,
   },
   inner: {
+    display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
     fontFamily: theme.fontFamily,
@@ -24,7 +25,6 @@ const styles = StyleSheet.create({
   imageBlock: {
     textAlign: 'center',
     display: 'flex',
-    flexShrink: 1,
     alignContent: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -36,15 +36,17 @@ const styles = StyleSheet.create({
   },
   textBlock: {
     display: 'flex',
-    flexGrow: 1,
+    alignContent: 'center',
+    justifyContent: 'center',
+    flexShrink: 1,
     marginLeft: 16,
+    marginRight: 16,
     fontFamily: theme.fontFamily,
   },
   zipBlock: {
     fontFamily: theme.fontFamily,
     textAlign: 'center',
     display: 'flex',
-    flexShrink: 1,
     alignContent: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
@@ -108,12 +110,12 @@ class CovidItem extends Component {
 
   renderText() {
     return (
-      <Text>Please, inform your zip code to get the last COVID-19 stats.</Text>
+      <Text style={{ fontSize: 14, textAlign: 'center' }}>Please, inform your zip code to get the last COVID-19 stats.</Text>
     );
   }
   renderNotFoundText() {
     return (
-      <Text style={{ paddingRight: 5 }}>The zip code was not found. Please, review it.</Text>
+      <Text style={{ fontSize: 14, textAlign: 'center' }}>The zip code was not found. Please, review it.</Text>
     );
   }
 
