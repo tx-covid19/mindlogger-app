@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar } from 'react-native';
+import { StatusBar, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Header, Title, Content, Button, Icon, Text, Left, Body, Right, View } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import { skinSelector } from '../../state/app/app.selectors';
 
-import { LineChart, Grid, YAxis } from 'react-native-svg-charts'
-import { Circle, Path } from 'react-native-svg'
-import * as shape from 'd3-shape'
+import {
+  LineChart,
+} from 'react-native-chart-kit'
+
+const linedata = {
+  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+  datasets: [
+    {
+      data: [20, 45, 28, 80, 99, 43],
+      strokeWidth: 2, // optional
+    },
+  ],
+};
 
 class CovidDetails extends Component {
 
@@ -17,7 +27,9 @@ class CovidDetails extends Component {
     const { skin } = this.props;
 
     const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
-    const contentInset = { top: 20, bottom: 20 }
+    const YAxisInset = { top: 20, bottom: 20 }
+    const XAxisInset = { left: 20, right: 20 }
+    const graphInset = { ...YAxisInset, ...XAxisInset }
 
     const Decorator = ({ x, y, data }) => {
       return data.map((value, index) => (
@@ -58,28 +70,37 @@ class CovidDetails extends Component {
           <Right />
         </Header>
         <Content>
-          <View style={{ height: 200, flexDirection: 'row' }}>
-            <YAxis
-              data={data}
-              contentInset={contentInset}
-              svg={{
-                  fill: 'grey',
-                  fontSize: 10,
-              }}
-              numberOfTicks={10}
-              />
-            <LineChart
-                style={{ flex: 1, marginLeft: 16 }}
-                data={data}
-                contentInset={contentInset}
-                curve={shape.curveNatural}
-                svg={{ stroke: skin.colors.primary }}
-            >
-              <Grid/>
-              <Line/>
-              <Decorator/>
-            </LineChart>
-          </View>
+          <LineChart
+            data={{
+              labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+              datasets: [
+                {
+                  data: [20, 45, 28, 80, 99, 43],
+                  strokeWidth: 2,
+                },
+              ],
+            }}
+            bezier
+            width={Dimensions.get('window').width}
+            height={Dimensions.get('window').height}
+            chartConfig={{
+              backgroundColor: "#fff",
+              backgroundGradientFrom: "#fff",
+              backgroundGradientTo: "#fff",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              propsForDots: {
+                r: "4",
+                strokeWidth: "2",
+                stroke: "#000",
+                fill: "#fff",
+              }
+            }}
+            style={{
+              marginVertical: 20,
+            }}
+          />
         </Content>
       </Container>
     );
