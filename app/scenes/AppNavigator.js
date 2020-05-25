@@ -22,15 +22,12 @@ import ReportTest from './ReportTest';
 import ChangePassword from './ChangePassword';
 import Splash from './Splash';
 import VolumeInfo from './VolumeInfo';
-// import { colors } from '../themes/colors';
 import AppletInviteFlow from './AppletInviteFlow';
-import AppletSettings from './AppletSettings';
 
 const theme = getTheme(platform);
 theme['NativeBase.Footer'].height = 80;
 theme['NativeBase.FooterTab']['NativeBase.Button']['.active'].backgroundColor = 'transparent';
 
-// eslint-disable-next-line
 const Navigator = Actions.create(
   <Lightbox>
     <Modal hideNavBar>
@@ -51,9 +48,7 @@ const Navigator = Actions.create(
           <Scene key="settings" component={Settings} />
           <Scene key="report_test" component={ReportTest} />
           <Scene key="change_password" component={ChangePassword} />
-          <Scene key="applet_settings" component={AppletSettings} />
         </Scene>
-        {/* </Drawer> */}
       </Scene>
       <Scene key="take_act" component={Activity} />
       <Scene key="invite" component={AppletInviteFlow} />
