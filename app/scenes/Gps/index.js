@@ -1,84 +1,102 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, Text } from 'react-native';
+import {
+  StatusBar,
+  Text,
+  Switch,
+} from 'react-native';
 import { connect } from 'react-redux';
 import {
   Container,
   Content,
   Icon,
-  View,
   Header,
   Right,
   Body,
   Title,
   Left,
   Button,
+  List,
+  ListItem,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import styles from './styles';
-import { clearGeolocationData } from '../../state/geolocation/geolocation.actions';
-import { dataSelector } from '../../state/geolocation/geolocation.selectors';
+import { setGeolocationAllowed } from '../../state/geolocation/geolocation.actions';
+import { geolocationAllowedSelector } from '../../state/geolocation/geolocation.selectors';
+import LocationServices from '../../services/LocationServices';
 
+const GpsData = ({ isGeolocationAllowed, setGeolocationAllowed }) => {
+  const toggleSwitch = () => {
+    if (isGeolocationAllowed) {
+      LocationServices.stop();
+    }
+    setGeolocationAllowed(!isGeolocationAllowed);
+  };
 
-class GpsData extends Component {
-
-  onClose = () => {
+  const onClose = () => {
     Actions.pop();
-  }
+  };
 
-  onClear = () => {
-    this.props.clearGeolocationData();
-  }
+  const locationText = 'HornSense uses location tracking to privately and anonymously monitor social distancing practices.\n\nHornSense will never export your location without your explicit permission.';
 
-  render() {
-    const data = JSON.stringify(this.props.data, undefined, 4);
-    return (
-      <Container>
-        <StatusBar barStyle="light-content" />
-        <Header hasSubtitle>
-          <Left>
-            <Button transparent onPress={this.onClose}>
-              <Icon name="close" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>GPS Data</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content>
-          <View>
-            <Button
-              onPress={() => this.onClear()}
-              style={styles.button}
-            >
-              <Text
-                style={styles.buttonText}
-              >
-                Clear
+  return (
+    <Container>
+      <StatusBar barStyle="light-content" />
+      <Header hasSubtitle>
+        <Left>
+          <Button transparent onPress={onClose}>
+            <Icon name="close" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Geolocation Tracking</Title>
+        </Body>
+        <Right />
+      </Header>
+      <Content>
+        <List>
+          <ListItem
+            button
+            bordered
+          >
+            <Left>
+              <Text>
+                {locationText}
               </Text>
-            </Button>
-            <Text>
-              {data}
-            </Text>
-          </View>
-        </Content>
-      </Container>
-    );
-  }
-}
+            </Left>
+          </ListItem>
+          <ListItem
+            bordered
+          >
+            <Left>
+              <Text>
+                Allow location tracking
+              </Text>
+            </Left>
+            <Right>
+              <Switch
+                onValueChange={toggleSwitch}
+                value={isGeolocationAllowed}
+                style={{ padding: 8 }}
+              />
+            </Right>
+          </ListItem>
+        </List>
+      </Content>
+    </Container>
+  );
+};
 
 GpsData.propTypes = {
-  data: PropTypes.array.isRequired,
-  clearGeolocationData: PropTypes.func.isRequired,
+  isGeolocationAllowed: PropTypes.bool.isRequired,
+  setGeolocationAllowed: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  data: dataSelector(state),
+  isGeolocationAllowed: geolocationAllowedSelector(state),
 });
 
 const mapDispatchToProps = {
-  clearGeolocationData,
+  setGeolocationAllowed,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GpsData);
