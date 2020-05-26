@@ -4,6 +4,11 @@ export const clearGeolocationData = () => ({
   type: GEOLOCATION_CONSTANTS.CLEAR,
 });
 
+export const setGeolocationAllowed = isGeolocationAllowed => ({
+  type: GEOLOCATION_CONSTANTS.SET_GEOLOCATION_ALLOWED,
+  payload: isGeolocationAllowed,
+});
+
 export const setGeolocationData = data => ({
   type: GEOLOCATION_CONSTANTS.SET_DATA,
   payload: data,
