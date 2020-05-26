@@ -59,10 +59,12 @@
 	<string>$(PRODUCT_NAME) would like access to your calendar</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location history will be saved on your device, and only shared with others if you choose to do so.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your location, including when you are not using the app</string>
+	<string>Your location history will be saved on your device, and only shared with others if you choose to do so.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your location when you are using the app</string>
+	<string>Your location history will be saved on your device, and only shared with others if you choose to do so.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your microphone (for videos)</string>
 	<key>NSMotionUsageDescription</key>
