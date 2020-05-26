@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StatusBar, Text, Platform } from 'react-native';
+import { StatusBar, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
   Container,
@@ -15,26 +15,12 @@ import {
   Button,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
-import {
-  PERMISSIONS,
-  RESULTS,
-  check,
-} from 'react-native-permissions';
 import styles from './styles';
 import { clearGeolocationData } from '../../state/geolocation/geolocation.actions';
 import { dataSelector } from '../../state/geolocation/geolocation.selectors';
-import LocationServices from '../../services/LocationServices';
 
 
 class GpsData extends Component {
-  constructor(props) {
-    super(props);
-    try {
-      this.checkCurrentState();
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   onClose = () => {
     Actions.pop();
@@ -42,35 +28,6 @@ class GpsData extends Component {
 
   onClear = () => {
     this.props.clearGeolocationData();
-  }
-
-  checkCurrentState() {
-    // NEED TO TEST ON ANDROID
-    let locationPermission;
-    if (Platform.OS === 'ios') {
-      locationPermission = PERMISSIONS.IOS.LOCATION_ALWAYS;
-    } else {
-      locationPermission = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-    }
-
-    // If user has location enabled & permissions, start logging
-    check(locationPermission)
-      .then((result) => {
-        switch (result) {
-          case RESULTS.GRANTED:
-            LocationServices.start();
-            return;
-          case RESULTS.UNAVAILABLE:
-          case RESULTS.BLOCKED:
-            console.log('NO LOCATION');
-            LocationServices.stop();
-            return;
-          default:
-            console.log('default');
-        }
-      }).catch((error) => {
-        console.log(`error checking location: ${error}`);
-      });
   }
 
   render() {
