@@ -19,6 +19,7 @@ import {
 import { colors } from '../../theme';
 import AppletListItem from '../../components/AppletListItem';
 import CovidItem from '../../components/CovidItem';
+import GeolocationItem from '../../components/GeolocationItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
 
@@ -130,6 +131,7 @@ const AppletListComponent = ({
               loading={isFetchingStats}
               onChangeZipcode={onChangeZipcode}
             />
+            <GeolocationItem />
           </ScrollView>
         </SafeAreaView>
       </Container>
