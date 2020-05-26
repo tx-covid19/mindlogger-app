@@ -35,10 +35,9 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   textBlock: {
-    display: 'flex',
+    flex: 1,
     alignContent: 'center',
     justifyContent: 'center',
-    flexShrink: 1,
     marginLeft: 16,
     marginRight: 16,
     fontFamily: theme.fontFamily,
@@ -145,7 +144,7 @@ class CovidItem extends Component {
   }
 
   render() {
-    const { stats, zipcode, loading, onPress } = this.props;
+    const { stats, loading, zipcode,  onPress } = this.props;
     const { editing } = this.state;
 
     return (
