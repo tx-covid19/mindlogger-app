@@ -2,55 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StatusBar, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
-import { Container, Header, Title, Content, Button, Icon, Text, Left, Body, Right, View } from 'native-base';
+import { Container, Header, Title, Content, Button, Icon, BodyText, Text, Left, Body, Right, View, Tabs, Tab } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 import { skinSelector } from '../../state/app/app.selectors';
+import { statsSelector, zipcodeSelector, isFetchingStatsSelector } from '../../state/covid/covid.selectors';
 
 import {
   LineChart,
 } from 'react-native-chart-kit'
 
-const linedata = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-  datasets: [
-    {
-      data: [20, 45, 28, 80, 99, 43],
-      strokeWidth: 2, // optional
-    },
-  ],
-};
+const fmt = (n) => n.toLocaleString('en-US');
 
 class CovidDetails extends Component {
 
   render() {
-    const { skin } = this.props;
+    const { skin, stats, loading, zipcode } = this.props;
 
-    const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
-    const YAxisInset = { top: 20, bottom: 20 }
-    const XAxisInset = { left: 20, right: 20 }
-    const graphInset = { ...YAxisInset, ...XAxisInset }
-
-    const Decorator = ({ x, y, data }) => {
-      return data.map((value, index) => (
-          <Circle
-              key={ index }
-              cx={ x(index) }
-              cy={ y(value) }
-              r={ 4 }
-              stroke={ skin.colors.primary }
-              fill={ 'white' }
-          />
-      ))
-    }
-
-    const Line = ({ line }) => (
-      <Path
-          d={ line }
-          stroke={ skin.colors.primary }
-          fill={ 'none' }
-      />
-    )
+    console.log(stats)
 
     return (
       <Container style={styles.container}>
@@ -69,38 +38,66 @@ class CovidDetails extends Component {
           </Body>
           <Right />
         </Header>
-        <Content>
-          <LineChart
-            data={{
-              labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-              datasets: [
-                {
-                  data: [20, 45, 28, 80, 99, 43],
-                  strokeWidth: 2,
-                },
-              ],
-            }}
-            bezier
-            width={Dimensions.get('window').width}
-            height={Dimensions.get('window').height}
-            chartConfig={{
-              backgroundColor: "#fff",
-              backgroundGradientFrom: "#fff",
-              backgroundGradientTo: "#fff",
-              decimalPlaces: 2,
-              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-              propsForDots: {
-                r: "4",
-                strokeWidth: "2",
-                stroke: "#000",
-                fill: "#fff",
-              }
-            }}
-            style={{
-              marginVertical: 20,
-            }}
-          />
+        <Content style={{ flexDirection: 'row' }}>
+          <View style={{ flex: 1, width: Dimensions.get('window').width }}>
+            <Tabs>
+              <Tab heading="Country" style={{ flex: 1 }}>
+                <View style={{ padding: 16, paddingTop: 30 }}>
+                  <Text style={{ textAlign: 'center', fontSize: 30 }}>{fmt(stats.country.confirmed)}</Text>
+                  <Text style={{ textAlign: 'center' }}>Confirmed</Text>
+                </View>
+                <View style={{ padding: 16 }}>
+                  <Text style={{ textAlign: 'center', fontSize: 30 }}>{fmt(stats.country.confirmed)}</Text>
+                  <Text style={{ textAlign: 'center' }}>Deaths</Text>
+                </View>
+              </Tab>
+              <Tab heading="State">
+                <View style={{ padding: 16 }}>
+                  <Text>Confirmed: {fmt(stats.state.confirmed)}</Text>
+                  <Text>Deaths: {fmt(stats.state.confirmed)}</Text>
+                </View>
+              </Tab>
+              <Tab heading="County">
+                <View style={{ padding: 16 }}>
+                  <Text>Confirmed: {fmt(stats.county.confirmed)}</Text>
+                  <Text>Deaths: {fmt(stats.county.confirmed)}</Text>
+                </View>
+              </Tab>
+            </Tabs>
+          </View>
+          <View style={{  }}>
+            <LineChart
+              data={{
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                  {
+                    data: [20, 45, 28, 80, 99, 43],
+                    strokeWidth: 2,
+                  },
+                ],
+              }}
+              bezier
+              width={Dimensions.get('window').width}
+              height={300}
+              chartConfig={{
+                backgroundColor: "#fff",
+                backgroundGradientFrom: "#fff",
+                backgroundGradientTo: "#fff",
+                decimalPlaces: 2,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                propsForDots: {
+                  r: "4",
+                  strokeWidth: "2",
+                  stroke: "#000",
+                  fill: "#fff",
+                }
+              }}
+              style={{
+                marginVertical: 0,
+              }}
+            />
+          </View>
         </Content>
       </Container>
     );
@@ -116,6 +113,9 @@ CovidDetails.propTypes = {
 
 const mapStateToProps = state => ({
   skin: skinSelector(state),
+  stats: statsSelector(state),
+  zipcode: zipcodeSelector(state),
+  loading: isFetchingStatsSelector(state),
 });
 
 const mapDispatchToProps = {
