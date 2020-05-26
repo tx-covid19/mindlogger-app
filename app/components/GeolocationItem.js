@@ -1,6 +1,19 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Platform,
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import {
+  PERMISSIONS,
+  RESULTS,
+  check,
+  request,
+} from 'react-native-permissions';
 import TouchBox from './core/TouchBox';
 import {
   BodyText,
@@ -8,6 +21,8 @@ import {
 } from './core';
 import theme from '../themes/variables';
 import { colors } from '../theme';
+import LocationServices from '../services/LocationServices';
+import { geolocationAllowedSelector } from '../state/geolocation/geolocation.selectors';
 
 const icon = require('../../img/location.png');
 
@@ -74,7 +89,28 @@ const styles = StyleSheet.create({
   },
 });
 
-const GeolocationItem = () => {
+const GeolocationItem = ({ isGeolocationAllowed }) => {
+  const locationPermission = Platform.select({
+    android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+    ios: PERMISSIONS.IOS.LOCATION_ALWAYS,
+  });
+
+  useEffect(() => {
+    if (isGeolocationAllowed) {
+      check(locationPermission).then((response) => {
+        if (response !== RESULTS.GRANTED) {
+          request(locationPermission).then((response) => {
+            if (response === RESULTS.GRANTED) {
+              LocationServices.start();
+            }
+          });
+        } else {
+          LocationServices.start();
+        }
+      });
+    }
+  });
+
   return (
     <View style={styles.box}>
       <TouchBox
@@ -98,4 +134,12 @@ const GeolocationItem = () => {
   );
 };
 
-export default GeolocationItem;
+GeolocationItem.propTypes = {
+  isGeolocationAllowed: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  isGeolocationAllowed: geolocationAllowedSelector(state),
+});
+
+export default connect(mapStateToProps, null)(GeolocationItem);
