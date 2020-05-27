@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+} from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import TouchBox from './core/TouchBox';
 import {
   BodyText,
@@ -76,7 +81,9 @@ const styles = StyleSheet.create({
 const ContactDiaryItem = () => {
   return (
     <View style={styles.box}>
-      <TouchBox onPress={() => {}}>
+      <TouchBox onPress={() => {
+        Actions.push('contact_diary');
+      }}>
         <View style={styles.inner}>
           <Image style={styles.image} source={icon} />
           <View style={styles.textBlock}>

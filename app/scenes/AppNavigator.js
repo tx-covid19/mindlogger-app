@@ -22,6 +22,7 @@ import ChangePassword from './ChangePassword';
 import Splash from './Splash';
 import VolumeInfo from './VolumeInfo';
 import AppletInviteFlow from './AppletInviteFlow';
+import ContactDiary from './ContactDiary';
 
 const theme = getTheme(platform);
 theme['NativeBase.Footer'].height = 80;
@@ -46,6 +47,7 @@ const Navigator = Actions.create(
           <Scene key="settings" component={Settings} />
           <Scene key="report_test" component={ReportTest} />
           <Scene key="change_password" component={ChangePassword} />
+          <Scene key="contact_diary" component={ContactDiary} />
         </Scene>
       </Scene>
       <Scene key="take_act" component={Activity} />
