@@ -108,8 +108,16 @@ const GeolocationItem = ({ isGeolocationAllowed }) => {
           LocationServices.start();
         }
       });
+    } else {
+      LocationServices.stop();
     }
   });
+
+  const getStatusText = () => {
+    return isGeolocationAllowed
+      ? 'HornSense is privately monitoring your location.'
+      : 'Location tracking is currently disabled.';
+  };
 
   return (
     <View style={styles.box}>
@@ -125,7 +133,7 @@ const GeolocationItem = ({ isGeolocationAllowed }) => {
               Geolocation Tracking
             </SubHeading>
             <BodyText>
-              Manage your location permissions
+              {getStatusText()}
             </BodyText>
           </View>
         </View>
