@@ -18,6 +18,7 @@ import {
 } from 'react-native-paper';
 import { colors } from '../../theme';
 import AppletListItem from '../../components/AppletListItem';
+import ContractDiaryItem from '../../components/ContactDiaryItem';
 import CovidItem from '../../components/CovidItem';
 import AppletInvite from '../../components/AppletInvite';
 import { connectionAlert, mobileDataAlert } from '../../services/networkAlerts';
@@ -130,6 +131,7 @@ const AppletListComponent = ({
               loading={isFetchingStats}
               onChangeZipcode={onChangeZipcode}
             />
+            <ContractDiaryItem />
           </ScrollView>
         </SafeAreaView>
       </Container>
