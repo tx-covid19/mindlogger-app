@@ -282,8 +282,14 @@ export const getLast7DaysData = ({ authToken, appletId, referenceDate }) => {
   }).then(res => (res.status === 200 ? res.json() : res)); // Promise.reject(res)));
 };
 
-export const getCovidData = ({ authToken, zipcode }) => get(
+export const getCovidStats = ({ authToken, zipcode }) => get(
   'info/covid19',
+  authToken,
+  { zipcode },
+);
+
+export const getCovidTimeseries = ({ authToken, zipcode }) => get(
+  'info/covid19/timeseries',
   authToken,
   { zipcode },
 );
